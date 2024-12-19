@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import "package:nmt_doctor_app/providers/cart_provider.dart";
+import "package:provider/provider.dart";
 
 Widget buildSection1Item({
   required IconData icon,
@@ -68,27 +70,44 @@ Widget buildSection2Item({
 
 Widget buildHealthCheckItem({
   required String title,
+  required String preprice,
   required String price,
 }) {
-  return Card(
-    margin: const EdgeInsets.symmetric(vertical: 8.0),
-    child: ListTile(
-      leading: const Icon(Icons.check_circle, color: Colors.green),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
+  return Builder(builder: (context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        leading: const Icon(Icons.check_circle, color: Colors.green),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(preprice,style:const TextStyle(decoration: TextDecoration.lineThrough),),
+            const SizedBox(width: 10,),
+            Text(price),
+          ],
+        ),
+        trailing: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blueAccent,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            Provider.of<CartProvider>(context, listen: false).addItem(
+              CartItem(title: title, price: price),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('$title added to cart!')),
+            );
+          },
+          child: const Text("Add"),
         ),
       ),
-      subtitle: Text(price),
-      trailing: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
-          foregroundColor: Colors.white,
-        ),
-        onPressed: () {},
-        child: const Text("Add"),
-      ),
-    ),
-  );
+    );
+  });
 }

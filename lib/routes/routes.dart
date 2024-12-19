@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:nmt_doctor_app/screens/healthchecks/cart.dart';
 import 'package:nmt_doctor_app/screens/healthchecks/healthchecks.dart';
 import 'package:nmt_doctor_app/screens/home/home.dart';
 import 'package:nmt_doctor_app/screens/profile/profile.dart';
@@ -21,6 +22,10 @@ final GoRouter router = GoRouter(
         builder: (context, state) => const HealthChecksContent(),
       ),
       GoRoute(
+        path: '/health-checks/cart', // Health Checks page
+        builder: (context, state) =>CartContent(),
+      ),
+      GoRoute(
         path: '/reports', // My Reports page
         builder: (context, state) => const ReportsContent(),
       ),
@@ -30,7 +35,7 @@ final GoRouter router = GoRouter(
       ),
       GoRoute(
         path: '/profile', // Profile page
-        builder: (context, state) => const ProfileContent(),
+        builder: (context, state) => ProfileContent(),
       ),
     ],
   );

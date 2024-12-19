@@ -10,9 +10,7 @@ class ReportsContent extends StatelessWidget {
     return Scaffold(
       appBar: nmtdAppbar(),
       bottomNavigationBar: const NmtdNavbar(),
-      body: const Center(
-        child: Text('Reports Screen'),
-      ),
+      body:const Center()
     );
   }
 }

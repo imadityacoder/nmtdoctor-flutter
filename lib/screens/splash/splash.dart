@@ -38,18 +38,20 @@ class SplashScreenState extends State<SplashScreen>
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
         child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 600),
+          duration: const Duration(milliseconds: 1000),
           opacity: _opacity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/logo.png',
-                height: 200,
-                width: 200,
+                'assets/images/logo.png',
+                height: 230,
+                width: 230,
               ),
-              const SizedBox(height: 100,),
-              const CircularProgressIndicator(color: Colors.black54,),
+              const Text("Now My Turn \nDoctor",textAlign: TextAlign.center,style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),)
             ],
           ),
         ),

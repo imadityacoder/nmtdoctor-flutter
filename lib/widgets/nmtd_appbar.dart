@@ -8,7 +8,7 @@ AppBar nmtdAppbar() {
       children: [
         CircleAvatar(
           backgroundColor: Colors.transparent,
-          child: Image.asset('assets/logo.png'),
+          child: Image.asset('assets/images/logo.png'),
         ),
         const SizedBox(width: 10),
         const Text(
