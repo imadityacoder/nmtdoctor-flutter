@@ -19,7 +19,7 @@ class HealthChecksContent extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  context.go('/home');
+                  Navigator.pop(context);
                 },
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
               ),
@@ -32,55 +32,55 @@ class HealthChecksContent extends StatelessWidget {
           buildHealthCheckItem(
             title: 'Complete Blood Count (CBC)',
             preprice:'200',
-            price: '₹299',
+            price: '299',
           ),
           buildHealthCheckItem(
             title: 'Thyroid Function Test (TFT)',
             preprice:'200',
-            price: '₹499',
+            price: '499',
           ),
           buildHealthCheckItem(
             title: 'Liver Function Test (LFT)',
             preprice:'200',
-            price: '₹799',
+            price: '799',
           ),
           buildHealthCheckItem(
             title: 'Kidney Function Test (KFT)',
             preprice:'200',
-            price: '₹699',
+            price: '699',
           ),
           buildHealthCheckItem(
             title: 'Blood Glucose Test',
             preprice:'200',
-            price: '₹199',
+            price: '199',
           ),
           buildHealthCheckItem(
             title: 'Lipid Profile Test',
             preprice:'200',
-            price: '₹599',
+            price: '599',
           ),
           buildHealthCheckItem(
             title: 'Hemoglobin Test',
             preprice:'200',
-            price: '₹149',
+            price: '149',
           ),
           buildHealthCheckItem(
             title: 'Vitamin D Test',
             preprice:'200',
-            price: '₹899',
+            price: '899',
           ),
           buildHealthCheckItem(
             title: 'Iron Deficiency Test',
             preprice:'200',
-            price: '₹399',
+            price: '399',
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/health-checks/cart');
+          context.push('/health-checks/cart');
         },
-        child: const Icon(Icons.shopping_cart_checkout),
+        child: const Icon(Icons.shopping_cart_rounded),
       ),
     );
   }

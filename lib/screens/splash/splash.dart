@@ -19,11 +19,9 @@ class SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(milliseconds: 300), () {
       setState(() {
         _opacity = 1;
-         // Fade in effect
+        // Fade in effect
       });
     });
-
-
 
     // Navigate to the HomePage after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
@@ -44,14 +42,19 @@ class SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/logo.png',
+                'assets/images/logo.jpeg',
                 height: 230,
                 width: 230,
               ),
-              const Text("Now My Turn \nDoctor",textAlign: TextAlign.center,style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),)
+              const Text(
+                "Now My Turn \nDoctor",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Color.fromARGB(255, 0, 142, 207),
+                ),
+              )
             ],
           ),
         ),

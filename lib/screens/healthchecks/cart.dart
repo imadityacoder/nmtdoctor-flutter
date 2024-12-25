@@ -4,6 +4,8 @@ import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
 import 'package:provider/provider.dart';
 
 class CartContent extends StatelessWidget {
+  const CartContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -12,7 +14,7 @@ class CartContent extends StatelessWidget {
         return Scaffold(
           appBar: nmtdAppbar(),
           body: cart.items.isEmpty
-              ? Center(child: Text('Your cart is empty.'))
+              ? const Center(child: Text('Your cart is empty.'))
               : Column(
                   children: [
                     Expanded(
@@ -25,7 +27,7 @@ class CartContent extends StatelessWidget {
                             subtitle:
                                 Text('₹${item.price}'),
                             trailing: IconButton(
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                               color: Colors.redAccent,
                               onPressed: () {
                                 cart.removeItem(index);
@@ -42,12 +44,13 @@ class CartContent extends StatelessWidget {
                     ),
                     // Cart Summary and Clear Button
                     Container(
-                      padding: EdgeInsets.all(16.0),
+                      height: 300,
+                      padding: const EdgeInsets.all(16.0),
                       color: Colors.white,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -58,7 +61,7 @@ class CartContent extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '₹\$',
+                                '₹',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -67,20 +70,20 @@ class CartContent extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.redAccent,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 12),
                             ),
                             onPressed: () {
                               cart.clearCart();
                               ScaffoldMessenger.of(innerContext).showSnackBar(
-                                SnackBar(content: Text('Cart Cleared!')),
+                                const SnackBar(content: Text('Cart Cleared!')),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Clear Cart',
                               style: TextStyle(color: Colors.white),
                             ),

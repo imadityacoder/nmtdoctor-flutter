@@ -7,7 +7,7 @@ class ProfileContent extends StatelessWidget {
   final String email;
   final String profileImageUrl;
 
-  ProfileContent({
+  const ProfileContent({super.key, 
     this.userName = 'John Doe',
     this.email = 'johndoe@example.com',
     this.profileImageUrl = 'https://via.placeholder.com/150', // Placeholder Image
@@ -17,27 +17,27 @@ class ProfileContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: nmtdAppbar(),
-      bottomNavigationBar: NmtdNavbar(),
+      bottomNavigationBar: const NmtdNavbar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Profile Image
             CircleAvatar(
               radius: 60,
               backgroundImage: NetworkImage(profileImageUrl),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // User Name
             Text(
               userName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
 
             // User Email
             Text(
@@ -47,7 +47,7 @@ class ProfileContent extends StatelessWidget {
                 color: Colors.grey.shade600,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Profile Options
             _buildProfileOption(
@@ -86,7 +86,7 @@ class ProfileContent extends StatelessWidget {
               },
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
             // Logout Button
             ElevatedButton.icon(
@@ -94,12 +94,12 @@ class ProfileContent extends StatelessWidget {
                 // Handle Logout Logic
                 _showLogoutConfirmation(context);
               },
-              icon: Icon(Icons.logout),
-              label: Text('Logout'),
+              icon: const Icon(Icons.logout),
+              label: const Text('Logout'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
                 foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
             ),
           ],
@@ -117,7 +117,7 @@ class ProfileContent extends StatelessWidget {
     return ListTile(
       leading: Icon(icon, color: Colors.blueAccent),
       title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: onTap,
     );
   }
@@ -127,12 +127,12 @@ class ProfileContent extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Logout'),
-        content: Text('Are you sure you want to log out?'),
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to log out?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -140,7 +140,7 @@ class ProfileContent extends StatelessWidget {
               Navigator.pop(context);
               Navigator.pushReplacementNamed(context, '/login');
             },
-            child: Text(
+            child: const Text(
               'Logout',
               style: TextStyle(color: Colors.redAccent),
             ),

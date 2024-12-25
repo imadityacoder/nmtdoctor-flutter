@@ -15,19 +15,19 @@ class NmtdNavbar extends StatelessWidget {
       onTap: (index) {
         switch (index) {
           case 0:
-            context.go('/home');
+            context.push('/home');
             break;
           case 1:
-            context.go('/health-checks');
+            context.push('/health-checks');
             break;
           case 2:
-            context.go('/reports');
+            context.push('/reports');
             break;
           case 3:
-            context.go('/receipts');
+            context.push('/receipts');
             break;
           case 4:
-            context.go('/profile');
+            context.push('/profile');
             break;
         }
       },

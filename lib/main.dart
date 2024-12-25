@@ -10,7 +10,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CartProvider(), // Initialize the provider
-          child: HealthChecksContent(),
+          child: const HealthChecksContent(),
         ),
       ],
       child: const MyApp(),
@@ -37,6 +37,18 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      builder: (context, child) {
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (!didPop){
+              Navigator.pop(context);
+            }
+          },
+          child: child!,
+
+        );
+      },
     );
   }
 }

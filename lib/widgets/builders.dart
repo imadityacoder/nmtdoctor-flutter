@@ -75,6 +75,7 @@ Widget buildHealthCheckItem({
 }) {
   return Builder(builder: (context) {
     return Card(
+      elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
         leading: const Icon(Icons.check_circle, color: Colors.green),
@@ -87,9 +88,9 @@ Widget buildHealthCheckItem({
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(preprice,style:const TextStyle(decoration: TextDecoration.lineThrough),),
+            Text('₹$preprice',style:const TextStyle(decoration: TextDecoration.lineThrough,color:Colors.red),),
             const SizedBox(width: 10,),
-            Text(price),
+            Text('₹$price',style:const TextStyle(color: Colors.black87),),
           ],
         ),
         trailing: ElevatedButton(

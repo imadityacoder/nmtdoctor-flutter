@@ -23,7 +23,7 @@ class HomeContent extends StatelessWidget {
                   title: 'Blood Tests and Scans',
                   subtitle: 'Save upto 50% on blood tests and scans',
                   backgroundColor: Colors.blueAccent.shade100,
-                  onTap: () {context.go('/health-checks');},
+                  onTap: () {context.push('/health-checks');},
                 ),
                 buildSection1Item(
                   icon: Icons.home,
@@ -44,7 +44,7 @@ class HomeContent extends StatelessWidget {
                   title: 'Request a Call',
                   subtitle: 'We call you. No more call waiting',
                   backgroundColor: Colors.greenAccent,
-                  onTap: () {},
+                  onTap: () {context.push('/request-call');},
                 ),
                 const SizedBox(height: 20),
               ],
