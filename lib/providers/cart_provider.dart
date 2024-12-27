@@ -22,6 +22,12 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  double totalCalculate() {
+    double total = _items.fold(0.0, (sum, item) => sum + int.parse(item.price));
+    notifyListeners();
+    return total; // Assuming you have a `_total` variable to store the total.
+  }
+
   void clearCart() {
     _items.clear();
     notifyListeners();

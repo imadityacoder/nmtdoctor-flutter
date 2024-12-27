@@ -9,7 +9,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => CartProvider(), // Initialize the provider
+          create: (context) => CartProvider(),
           child: const HealthChecksContent(),
         ),
       ],
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NMT Doctor',
       theme: ThemeData(
+        fontFamily: 'Inter',
         colorSchemeSeed: Colors.blue,
         useMaterial3: true,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -36,17 +37,21 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white70,
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        elevatedButtonTheme: const ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor:
+                    WidgetStatePropertyAll(Color.fromARGB(255, 50, 190, 255)),
+                foregroundColor: WidgetStatePropertyAll(Colors.white))),
       ),
       builder: (context, child) {
         return PopScope(
           canPop: false,
           onPopInvokedWithResult: (didPop, result) {
-            if (!didPop){
+            if (!didPop) {
               Navigator.pop(context);
             }
           },
           child: child!,
-
         );
       },
     );

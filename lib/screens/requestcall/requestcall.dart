@@ -16,21 +16,37 @@ class RequestCallContent extends StatelessWidget {
         child: Form(
           key: _formKey,
           child: Card(
+            elevation: 3,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    'Enter your phone number:',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  const Text(
+                    'Request for a Call Now',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(
+                    height: 150,
+                  ),
+                  const Text(
+                    'Please, enter your phone number here',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54),
+                  ),
+                  const SizedBox(height: 12),
                   TextFormField(
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(),
                       hintText: 'Enter phone number',
                       prefixText: '+91 ', // Assuming India
@@ -45,9 +61,12 @@ class RequestCallContent extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Center(
                     child: ElevatedButton(
+                      style: const ButtonStyle(
+                        minimumSize: WidgetStatePropertyAll(Size(400, 50)),
+                      ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           String phoneNumber = '+91 ${_phoneController.text}';
@@ -59,7 +78,13 @@ class RequestCallContent extends StatelessWidget {
                           );
                         }
                       },
-                      child: Text('Submit'),
+                      child: const Text(
+                        'Submit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ],

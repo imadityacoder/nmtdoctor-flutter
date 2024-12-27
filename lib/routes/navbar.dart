@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_navbar.dart';
 import 'package:go_router/go_router.dart';
 
-
 class NmtdNavbar extends StatelessWidget {
   const NmtdNavbar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      elevation: 10,
+      elevation: 20,
       type: BottomNavigationBarType.fixed,
       currentIndex: _getCurrentIndex(context),
       onTap: (index) {
         switch (index) {
           case 0:
-            context.push('/home');
+            context.push('/');
             break;
           case 1:
             context.push('/health-checks');
@@ -45,4 +44,3 @@ class NmtdNavbar extends StatelessWidget {
     return 0;
   }
 }
-

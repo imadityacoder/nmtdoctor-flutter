@@ -11,7 +11,7 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: nmtdAppbar(),
-      bottomNavigationBar:const NmtdNavbar(),
+      bottomNavigationBar: const NmtdNavbar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -23,28 +23,28 @@ class HomeContent extends StatelessWidget {
                   title: 'Blood Tests and Scans',
                   subtitle: 'Save upto 50% on blood tests and scans',
                   backgroundColor: Colors.blueAccent.shade100,
-                  onTap: () {context.push('/health-checks');},
+                  onTap: () => context.push('/health-checks'),
                 ),
                 buildSection1Item(
                   icon: Icons.home,
                   title: 'Health Checks at Home',
                   subtitle: 'Starting from ₹499',
                   backgroundColor: Colors.amberAccent,
-                  onTap: () {},
+                  onTap: () => (),
                 ),
                 buildSection1Item(
                   icon: Icons.local_offer,
                   title: 'App Exclusive Deals',
                   subtitle: 'Starting from ₹99',
                   backgroundColor: Colors.orangeAccent,
-                  onTap: () {},
+                  onTap: () => (),
                 ),
                 buildSection1Item(
                   icon: Icons.phone,
                   title: 'Request a Call',
                   subtitle: 'We call you. No more call waiting',
                   backgroundColor: Colors.greenAccent,
-                  onTap: () {context.push('/request-call');},
+                  onTap: () => context.push('/request-call'),
                 ),
                 const SizedBox(height: 20),
               ],

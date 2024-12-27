@@ -6,16 +6,12 @@ import 'package:nmt_doctor_app/screens/profile/profile.dart';
 import 'package:nmt_doctor_app/screens/receipts/receipts.dart';
 import 'package:nmt_doctor_app/screens/reports/reports.dart';
 import 'package:nmt_doctor_app/screens/requestcall/requestcall.dart'; 
-import 'package:nmt_doctor_app/screens/splash/splash.dart';
 
 final GoRouter router = GoRouter(
     routes: [
+
       GoRoute(
         path: '/', // Home page
-        builder: (context, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        path: '/home', // Home page
         builder: (context, state) => const HomeContent(),
       ),
       GoRoute(

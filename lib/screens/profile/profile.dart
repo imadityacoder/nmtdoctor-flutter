@@ -7,10 +7,12 @@ class ProfileContent extends StatelessWidget {
   final String email;
   final String profileImageUrl;
 
-  const ProfileContent({super.key, 
+  const ProfileContent({
+    super.key,
     this.userName = 'John Doe',
     this.email = 'johndoe@example.com',
-    this.profileImageUrl = 'https://via.placeholder.com/150', // Placeholder Image
+    this.profileImageUrl =
+        'https://via.placeholder.com/150', // Placeholder Image
   });
 
   @override
@@ -99,7 +101,8 @@ class ProfileContent extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
             ),
           ],

@@ -88,16 +88,21 @@ Widget buildHealthCheckItem({
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('₹$preprice',style:const TextStyle(decoration: TextDecoration.lineThrough,color:Colors.red),),
-            const SizedBox(width: 10,),
-            Text('₹$price',style:const TextStyle(color: Colors.black87),),
+            Text(
+              '₹$preprice',
+              style: const TextStyle(
+                  decoration: TextDecoration.lineThrough, color: Colors.red),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              '₹$price',
+              style: const TextStyle(color: Colors.black87),
+            ),
           ],
         ),
         trailing: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
-            foregroundColor: Colors.white,
-          ),
           onPressed: () {
             Provider.of<CartProvider>(context, listen: false).addItem(
               CartItem(title: title, price: price),

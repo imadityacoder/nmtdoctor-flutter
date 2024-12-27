@@ -36,20 +36,41 @@ class _ReceiptsContentState extends State<ReceiptsContent> {
       });
     }
   }
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: nmtdAppbar(),
-        bottomNavigationBar: const NmtdNavbar(),
-        body:Center(
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: nmtdAppbar(),
+      bottomNavigationBar: const NmtdNavbar(),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Card(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const Padding(
+                padding: EdgeInsets.all(5.0),
+                child: Text(
+                  'Upload your medical receipt here',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 22, fontFamily: 'Poppins'),
+                ),
+              ),
               // Display the selected or captured image
               _image != null
-                  ? Image.file(_image!,
-                      width: 300, height: 300, fit: BoxFit.cover)
-                  : const Text('No image selected'),
+                  ? Image.file(
+                      _image!,
+                      width: 300,
+                      height: 400,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      color: Colors.black12,
+                      alignment: Alignment.center,
+                      height: 400,
+                      width: 300,
+                      child: const Text('No image selected'),
+                    ),
               const SizedBox(height: 20),
               // Buttons to pick or take an image
               ElevatedButton.icon(
@@ -65,6 +86,7 @@ class _ReceiptsContentState extends State<ReceiptsContent> {
             ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}

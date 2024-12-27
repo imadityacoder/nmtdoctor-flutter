@@ -8,9 +8,9 @@ class CartContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (BuildContext innerContext) {
-        final cart = Provider.of<CartProvider>(innerContext);
+    return Consumer<CartProvider>(
+      builder: (context, cart, child) {
+        final totalSum = cart.totalCalculate();
         return Scaffold(
           appBar: nmtdAppbar(),
           body: cart.items.isEmpty
@@ -24,14 +24,13 @@ class CartContent extends StatelessWidget {
                           final item = cart.items[index];
                           return ListTile(
                             title: Text(item.title),
-                            subtitle:
-                                Text('₹${item.price}'),
+                            subtitle: Text('₹${item.price}'),
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),
                               color: Colors.redAccent,
                               onPressed: () {
                                 cart.removeItem(index);
-                                ScaffoldMessenger.of(innerContext).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('${item.title} removed'),
                                   ),
@@ -42,7 +41,6 @@ class CartContent extends StatelessWidget {
                         },
                       ),
                     ),
-                    // Cart Summary and Clear Button
                     Container(
                       height: 300,
                       padding: const EdgeInsets.all(16.0),
@@ -50,10 +48,10 @@ class CartContent extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Total:',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -61,8 +59,8 @@ class CartContent extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '₹',
-                                style: TextStyle(
+                                '₹${totalSum.toString()}',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blueAccent,
@@ -79,7 +77,7 @@ class CartContent extends StatelessWidget {
                             ),
                             onPressed: () {
                               cart.clearCart();
-                              ScaffoldMessenger.of(innerContext).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Cart Cleared!')),
                               );
                             },
@@ -96,5 +94,5 @@ class CartContent extends StatelessWidget {
         );
       },
     );
-  }}
-
+  }
+}
