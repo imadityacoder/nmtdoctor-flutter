@@ -33,7 +33,7 @@ class ReportsContent extends StatelessWidget {
           itemBuilder: (context, index) {
             final report = reports[index];
             return Card(
-              elevation: 4.0,
+              elevation: 3.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),

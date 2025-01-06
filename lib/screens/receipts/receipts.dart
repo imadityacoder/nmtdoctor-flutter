@@ -74,11 +74,17 @@ class _ReceiptsContentState extends State<ReceiptsContent> {
               const SizedBox(height: 20),
               // Buttons to pick or take an image
               ElevatedButton.icon(
+                style: const ButtonStyle(
+                  minimumSize: WidgetStatePropertyAll(Size(300, 42)),
+                ),
                 onPressed: _pickImageFromGallery,
                 icon: const Icon(Icons.photo),
                 label: const Text('Pick Image from Gallery'),
               ),
               ElevatedButton.icon(
+                style: const ButtonStyle(
+                  minimumSize: WidgetStatePropertyAll(Size(300, 42)),
+                ),
                 onPressed: _takePictureWithCamera,
                 icon: const Icon(Icons.camera_alt),
                 label: const Text('Take Picture with Camera'),

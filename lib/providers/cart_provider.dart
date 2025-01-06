@@ -12,20 +12,17 @@ class CartProvider extends ChangeNotifier {
 
   List<CartItem> get items => _items; // Getter for items
 
+  double get total =>
+      _items.fold(0.0, (sum, item) => sum + double.parse(item.price));
+
   void addItem(CartItem item) {
     _items.add(item);
     notifyListeners(); // Notify widgets listening to this provider
   }
 
-  void removeItem(int index) {
-    _items.removeAt(index);
+  void removeItemByTitle(String title) {
+    _items.removeWhere((item) => item.title == title);
     notifyListeners();
-  }
-
-  double totalCalculate() {
-    double total = _items.fold(0.0, (sum, item) => sum + int.parse(item.price));
-    notifyListeners();
-    return total; // Assuming you have a `_total` variable to store the total.
   }
 
   void clearCart() {

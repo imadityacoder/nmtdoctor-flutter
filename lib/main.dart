@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nmt_doctor_app/providers/cart_provider.dart';
 import 'package:nmt_doctor_app/routes/routes.dart';
-import 'package:nmt_doctor_app/screens/healthchecks/healthchecks.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -9,8 +8,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => CartProvider(),
-          child: const HealthChecksContent(),
+          create: (_) => CartProvider(),
         ),
       ],
       child: const MyApp(),
@@ -31,10 +29,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Inter',
         colorSchemeSeed: Colors.blue,
         useMaterial3: true,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black87,
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.blueGrey[50],
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         elevatedButtonTheme: const ElevatedButtonThemeData(
