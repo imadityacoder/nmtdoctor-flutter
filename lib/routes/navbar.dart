@@ -14,7 +14,7 @@ class NmtdNavbar extends StatelessWidget {
       onTap: (index) {
         switch (index) {
           case 0:
-            context.go('/');
+            context.push('/');
             break;
           case 1:
             context.push('/health-checks');
@@ -22,7 +22,7 @@ class NmtdNavbar extends StatelessWidget {
           case 2:
             context.push('/reports');
             break;
-          case 4:
+          case 3:
             context.push('/profile');
             break;
         }
@@ -36,7 +36,7 @@ class NmtdNavbar extends StatelessWidget {
     if (location == '/home') return 0;
     if (location == '/health-checks') return 1;
     if (location == '/reports') return 2;
-    if (location == '/profile') return 4;
+    if (location == '/profile') return 3;
     return 0;
   }
 }

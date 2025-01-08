@@ -9,10 +9,9 @@ class ProfileContent extends StatelessWidget {
 
   const ProfileContent({
     super.key,
-    this.userName = 'John Doe',
-    this.email = 'johndoe@example.com',
-    this.profileImageUrl =
-        'https://via.placeholder.com/150', // Placeholder Image
+    this.userName = 'Aditya Kumar',
+    this.email = 'iamadityacoder01@gmail.com',
+    this.profileImageUrl = 'assets/images/profile.jpg', // Placeholder Image
   });
 
   @override
@@ -27,7 +26,7 @@ class ProfileContent extends StatelessWidget {
             // Profile Image
             CircleAvatar(
               radius: 60,
-              backgroundImage: NetworkImage(profileImageUrl),
+              backgroundImage: AssetImage(profileImageUrl),
             ),
             const SizedBox(height: 10),
 
@@ -117,11 +116,16 @@ class ProfileContent extends StatelessWidget {
     required String title,
     required VoidCallback onTap,
   }) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.blueAccent),
-      title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: onTap,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        child: ListTile(
+          leading: Icon(icon, color: Colors.blueAccent),
+          title: Text(title),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+          onTap: onTap,
+        ),
+      ),
     );
   }
 

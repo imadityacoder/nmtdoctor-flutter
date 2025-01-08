@@ -27,14 +27,14 @@ class HomeContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildSection1Item(
-                    icon: Icons.local_hospital,
+                    icon: Icons.medical_services,
                     title: 'Blood Tests and Scans',
                     subtitle: 'Save upto 50% on blood tests and scans',
-                    backgroundColor: Colors.blueAccent.shade100,
+                    backgroundColor: Colors.redAccent.shade200,
                     onTap: () => context.push('/health-checks'),
                   ),
                   buildSection1Item(
-                    icon: Icons.home,
+                    icon: Icons.safety_check_rounded,
                     title: 'Health Checks at Home',
                     subtitle: 'Starting from ₹499',
                     backgroundColor: Colors.amberAccent,
@@ -42,7 +42,7 @@ class HomeContent extends StatelessWidget {
                     // Empty callback fixed
                   ),
                   buildSection1Item(
-                    icon: Icons.camera_alt,
+                    icon: Icons.camera_enhance_rounded,
                     title: 'Upload Your Prescription Receipt',
                     subtitle:
                         'Securely upload your prescription receipt for quick and accurate healthcare services',
@@ -51,7 +51,7 @@ class HomeContent extends StatelessWidget {
                         context.push('/receipts'), // Empty callback fixed
                   ),
                   buildSection1Item(
-                    icon: Icons.phone,
+                    icon: Icons.call_rounded,
                     title: 'Request or Make a Call',
                     subtitle: 'We call you. No more call waiting',
                     backgroundColor: Colors.greenAccent,
@@ -65,7 +65,7 @@ class HomeContent extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                'Famous Checkups',
+                'Popular Checkups',
                 style: TextStyle(
                   fontSize: 24,
                   fontFamily: 'Poppins',
@@ -78,12 +78,12 @@ class HomeContent extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: famousCheckups.map((item) {
+                children: popularCheckups.map((item) {
                   return buildSection2Item(
-                    icon: item['icon'] as IconData,
+                    icon: item['icon']!,
                     title: item['title']!,
                     price: item['price']!,
-                    preprice: item['price'],
+                    preprice: item['price']!,
                   );
                 }).toList(),
               ),

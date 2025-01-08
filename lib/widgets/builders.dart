@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nmt_doctor_app/providers/cart_provider.dart';
+import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
 import 'package:provider/provider.dart';
 
@@ -40,83 +42,218 @@ Widget buildSection1Item({
 
 Widget buildSection2Item({
   required String title,
-  required IconData icon,
+  required String icon,
   required String preprice,
   required String price,
   VoidCallback? onTap,
   Color titleColor = Colors.black,
-  Color descColor = Colors.grey,
   Color priceColor = Colors.green,
   Color prepriceColor = Colors.red,
-  double iconSize = 50,
+  double iconSize = 70,
   double elevation = 3,
   double titleFontSize = 16,
-  double descFontSize = 13,
+  double prepriceFontSize = 13,
+  double priceFontSize = 15,
 }) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 8.0, top: 6.0),
-    child: Card(
-      elevation: 3,
-      child: SizedBox(
-        width: 220,
-        height: 140, // Increased height to accommodate button
-        child: Column(
+  return Card(
+    elevation: elevation,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: SizedBox(
+      width: 260,
+      height: 140, // Adjusted height to accommodate all elements
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ListTile(
-              onTap: onTap,
-              leading: Icon(
-                icon,
-                size: iconSize,
-                color: const Color.fromARGB(216, 255, 17, 0),
-              ),
-              title: Text(
-                title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: titleFontSize,
-                  color: titleColor,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  height: iconSize,
+                  width: iconSize,
+                  fit: BoxFit.contain,
                 ),
-                overflow: TextOverflow.clip,
-              ),
-              subtitle: Row(
-                children: [
-                  Text(
-                    "₹$preprice",
-                    style: TextStyle(
-                      color: prepriceColor,
-                      decoration: TextDecoration.lineThrough,
-                      fontSize: descFontSize,
+                Row(
+                  children: [
+                    Text(
+                      "₹$preprice",
+                      style: TextStyle(
+                        color: prepriceColor,
+                        decoration: TextDecoration.lineThrough,
+                        fontSize: prepriceFontSize,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    "₹$price",
-                    style: TextStyle(
-                      color: priceColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: descFontSize,
+                    const SizedBox(width: 8),
+                    Text(
+                      "₹$price",
+                      style: TextStyle(
+                        color: priceColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: priceFontSize,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Button action
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(70, 35),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Spacer(),
+                SizedBox(
+                  width: 120,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: titleFontSize,
+                      color: titleColor,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.clip,
+                  ),
                 ),
-                child: const Text("Book Now"),
-              ),
+                const Spacer(),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(120, 36),
+                  ),
+                  onPressed: onTap,
+                  child: const Text("Book Now"),
+                ),
+              ],
             ),
           ],
         ),
       ),
     ),
+  );
+}
+
+Widget buildHealthPackItem({
+  required String title,
+  required String preprice,
+  required String price,
+  required String svgAsset,
+  required String description,
+  VoidCallback? onTap,
+}) {
+  return Consumer<HealthpackProvider>(
+    builder: (context, provider, child) {
+      final ifExpanded = provider.isExpanded;
+      return GestureDetector(
+        onTap: provider.toggleExpand,
+        child: AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+          child: Card(
+            elevation: 3,
+            margin: const EdgeInsets.symmetric(vertical: 6.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        svgAsset,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(width: 15),
+                      Container(
+                        width: 1, // Vertical line width
+                        height: 120, // Vertical line height
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              description,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                              maxLines: ifExpanded ? 10 : 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "₹$preprice",
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.red,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "₹$price",
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: ElevatedButton(
+                                    onPressed: onTap,
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(90, 35),
+                                    ),
+                                    child: const Text("Book Now"),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    },
   );
 }
 

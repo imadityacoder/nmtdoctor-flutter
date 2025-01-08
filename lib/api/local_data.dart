@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 List healthChecks = [
   {"title": "Hemoglobin (Hb)", "price": "250", "preprice": "300"},
   {"title": "Red Blood Cell Count (RBC)", "price": "300", "preprice": "350"},
@@ -105,41 +103,38 @@ List healthChecks = [
   {"title": "Progesterone", "price": "300", "preprice": "350"},
 ];
 
-final List<Map<String, dynamic>> famousCheckups = [
+List<Map<String, dynamic>> popularCheckups = [
   {
-    'title': 'Kidney Function Test',
-    'price': '699',
-    'icon': Icons.accessibility_sharp,
+    "title": "Basic Health Checkup",
+    "price": "999",
+    "preprice": "1499",
+    "icon": "assets/icons/sample.svg",
   },
   {
-    'title': 'Hemoglobin Test',
-    'price': '399',
-    'icon': Icons.my_library_books_rounded,
+    "title": "Liver Function Test Package",
+    "price": "1199",
+    "preprice": "1699",
+    "icon": "assets/icons/liver.svg",
   },
   {
-    'title': 'Blood Glucose Test',
-    'price': '499',
-    'icon': Icons.assignment_ind,
+    "title": "Kidney Function Test Package",
+    "price": "1099",
+    "preprice": "1599",
+    "icon": "assets/icons/kidney.svg",
   },
   {
-    'title': 'Blood Glucose Test',
-    'price': '499',
-    'icon': Icons.assignment_ind,
+    "title": "Thyroid Profile Package",
+    "price": "899",
+    "preprice": "1299",
+    "icon": "assets/icons/pills.svg",
   },
   {
-    'title': 'Blood Glucose Test',
-    'price': '499',
-    'icon': Icons.assignment_ind,
-  },
-  {
-    'title': 'Blood Glucose Test',
-    'price': '499',
-    'icon': Icons.assignment_ind,
-  },
-  {
-    'title': 'Blood Glucose Test',
-    'price': '499',
-    'icon': Icons.assignment_ind,
+    "title": "Heart Health Package",
+    "description":
+        "Designed for cardiovascular health, including Lipid Profile, CRP, and ECG.",
+    "price": "1499",
+    "preprice": "1999",
+    "icon": "assets/icons/heart.svg",
   },
 ];
 
@@ -150,7 +145,7 @@ List<Map<String, dynamic>> healthPacks = [
         "A starter pack to assess overall health, including CBC, Blood Sugar Tests, and Lipid Profile.",
     "price": "999",
     "preprice": "1499",
-    "svgAsset": "assets/images/test.svg",
+    "svgAsset": "assets/icons/sample.svg",
     "testsIncluded": ["CBC", "Blood Sugar Tests", "Lipid Profile"],
     "recommendedFor": "General health assessment."
   },
@@ -160,7 +155,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Monitor and manage diabetes with FBS, PPBS, HbA1c, and Lipid Profile.",
     "price": "1299",
     "preprice": "1799",
-    "svgAsset": "assets/icons/diabetes_care_package.svg",
+    "svgAsset": "assets/icons/petri.svg",
     "testsIncluded": ["FBS", "PPBS", "HbA1c", "Lipid Profile"],
     "recommendedFor": "Diabetes management."
   },
@@ -169,7 +164,7 @@ List<Map<String, dynamic>> healthPacks = [
     "description": "Evaluate liver health with ALT, AST, Bilirubin, and more.",
     "price": "1199",
     "preprice": "1699",
-    "svgAsset": "assets/icons/liver_function_test.svg",
+    "svgAsset": "assets/icons/liver.svg",
     "testsIncluded": ["ALT", "AST", "Bilirubin"],
     "recommendedFor": "Liver health assessment."
   },
@@ -179,7 +174,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Focused on kidney health with Serum Creatinine, BUN, and Uric Acid.",
     "price": "1099",
     "preprice": "1599",
-    "svgAsset": "assets/icons/kidney_function_test.svg",
+    "svgAsset": "assets/icons/kidney.svg",
     "testsIncluded": ["Serum Creatinine", "BUN", "Uric Acid"],
     "recommendedFor": "Kidney health assessment."
   },
@@ -189,7 +184,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Includes TSH, Free T3, and Free T4 to assess thyroid gland function.",
     "price": "899",
     "preprice": "1299",
-    "svgAsset": "assets/icons/thyroid_profile.svg",
+    "svgAsset": "assets/icons/pills.svg",
     "testsIncluded": ["TSH", "Free T3", "Free T4"],
     "recommendedFor": "Thyroid health evaluation."
   },
@@ -199,7 +194,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Designed for cardiovascular health, including Lipid Profile, CRP, and ECG.",
     "price": "1499",
     "preprice": "1999",
-    "svgAsset": "assets/icons/heart_health.svg",
+    "svgAsset": "assets/icons/heart.svg",
     "testsIncluded": ["Lipid Profile", "CRP", "ECG"],
     "recommendedFor": "Cardiovascular health."
   },
@@ -209,7 +204,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Covers hormonal and general health for women, including CBC, Estradiol, and Thyroid Profile.",
     "price": "1699",
     "preprice": "2199",
-    "svgAsset": "assets/icons/womens_health.svg",
+    "svgAsset": "assets/icons/nurse.svg",
     "testsIncluded": ["CBC", "Estradiol", "Thyroid Profile"],
     "recommendedFor": "Women’s general and hormonal health."
   },
@@ -219,19 +214,9 @@ List<Map<String, dynamic>> healthPacks = [
         "Includes tests for men’s health, such as CBC, Testosterone, and Lipid Profile.",
     "price": "1599",
     "preprice": "2099",
-    "svgAsset": "assets/icons/mens_health.svg",
+    "svgAsset": "assets/icons/doctor.svg",
     "testsIncluded": ["CBC", "Testosterone", "Lipid Profile"],
     "recommendedFor": "Men’s general health."
-  },
-  {
-    "title": "Senior Citizen Health Checkup",
-    "description":
-        "Tailored for elderly individuals, includes CBC, KFT, LFT, Lipid Profile, and more.",
-    "price": "1999",
-    "preprice": "2599",
-    "svgAsset": "assets/icons/senior_citizen_checkup.svg",
-    "testsIncluded": ["CBC", "KFT", "LFT", "Lipid Profile"],
-    "recommendedFor": "Health monitoring for elderly."
   },
   {
     "title": "Full Body Checkup",
@@ -239,7 +224,7 @@ List<Map<String, dynamic>> healthPacks = [
         "A comprehensive package covering all major health parameters.",
     "price": "2999",
     "preprice": "3999",
-    "svgAsset": "assets/icons/full_body_checkup.svg",
+    "svgAsset": "assets/icons/kit.svg",
     "testsIncluded": ["Complete Health Tests"],
     "recommendedFor": "Comprehensive health assessment."
   },
@@ -249,7 +234,7 @@ List<Map<String, dynamic>> healthPacks = [
         "Checks for anemia and iron-related disorders, including Serum Iron, TIBC, and Ferritin.",
     "price": "799",
     "preprice": "1199",
-    "svgAsset": "assets/icons/iron_deficiency.svg",
+    "svgAsset": "assets/icons/dna.svg",
     "testsIncluded": ["Serum Iron", "TIBC", "Ferritin"],
     "recommendedFor": "Iron deficiency and anemia detection."
   },
