@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HealthpackProvider extends ChangeNotifier {
-  bool _isExpanded = false;
+  String? _expandedCardId;
 
-  bool get isExpanded => _isExpanded;
+  String? get expandedCardId => _expandedCardId;
 
-  void toggleExpand() {
-    _isExpanded = !_isExpanded;
+  void toggleCard(String cardId) {
+    if (_expandedCardId == cardId) {
+      _expandedCardId = null; // Collapse if already expanded
+    } else {
+      _expandedCardId = cardId; // Expand the tapped card
+    }
     notifyListeners();
   }
 }

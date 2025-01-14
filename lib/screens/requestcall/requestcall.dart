@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_appbar.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart'; // Add this dependency in pubspec.yaml
 
 class RequestCallContent extends StatelessWidget {

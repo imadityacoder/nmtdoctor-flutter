@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nmt_doctor_app/providers/cart_provider.dart';
-import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
+import 'package:nmtdoctor_app/providers/cart_provider.dart';
+import 'package:nmtdoctor_app/providers/healthpack_provider.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_snackbar.dart';
 import 'package:provider/provider.dart';
 
 Widget buildSection1Item({
@@ -137,6 +137,7 @@ Widget buildSection2Item({
 }
 
 Widget buildHealthPackItem({
+  required String cardId,
   required String title,
   required String preprice,
   required String price,
@@ -146,9 +147,9 @@ Widget buildHealthPackItem({
 }) {
   return Consumer<HealthpackProvider>(
     builder: (context, provider, child) {
-      final ifExpanded = provider.isExpanded;
+      final ifExpanded = provider.expandedCardId == cardId;
       return GestureDetector(
-        onTap: provider.toggleExpand,
+        onTap: () => provider.toggleCard(cardId),
         child: AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
@@ -201,7 +202,7 @@ Widget buildHealthPackItem({
                                 fontSize: 14,
                                 color: Colors.grey[600],
                               ),
-                              maxLines: ifExpanded ? 10 : 2,
+                              maxLines: ifExpanded ? 15 : 3,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 12),
@@ -223,7 +224,7 @@ Widget buildHealthPackItem({
                                     Text(
                                       "₹$price",
                                       style: const TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.green,
                                       ),
@@ -235,7 +236,7 @@ Widget buildHealthPackItem({
                                   child: ElevatedButton(
                                     onPressed: onTap,
                                     style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(90, 35),
+                                      minimumSize: const Size(88, 35),
                                     ),
                                     child: const Text("Book Now"),
                                   ),

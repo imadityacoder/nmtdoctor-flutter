@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nmt_doctor_app/routes/navbar.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
+import 'package:nmtdoctor_app/routes/navbar.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_appbar.dart';
 
 class ReportsContent extends StatelessWidget {
   const ReportsContent({super.key});

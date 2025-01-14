@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
-import 'package:nmt_doctor_app/widgets/builders.dart';
-import 'package:nmt_doctor_app/routes/navbar.dart';
-import 'package:nmt_doctor_app/api/local_data.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_appbar.dart';
+import 'package:nmtdoctor_app/widgets/builders.dart';
+import 'package:nmtdoctor_app/routes/navbar.dart';
+import 'package:nmtdoctor_app/api/local_data.dart';
 
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
@@ -19,7 +19,6 @@ class HomeContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // nmtdTitlebar(),
             // Section 1: Vertical list of items
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nmt_doctor_app/providers/cart_provider.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
+import 'package:nmtdoctor_app/providers/cart_provider.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_appbar.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_snackbar.dart';
 import 'package:provider/provider.dart';
 
 class CartContent extends StatelessWidget {

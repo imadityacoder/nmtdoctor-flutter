@@ -1,12 +1,12 @@
 import 'package:go_router/go_router.dart';
-import 'package:nmt_doctor_app/screens/healthchecks/cart.dart';
-import 'package:nmt_doctor_app/screens/healthchecks/healthchecks.dart';
-import 'package:nmt_doctor_app/screens/healthpacks/healthpacks.dart';
-import 'package:nmt_doctor_app/screens/home/home.dart';
-import 'package:nmt_doctor_app/screens/profile/profile.dart';
-import 'package:nmt_doctor_app/screens/receipts/receipts.dart';
-import 'package:nmt_doctor_app/screens/reports/reports.dart';
-import 'package:nmt_doctor_app/screens/requestcall/requestcall.dart';
+import 'package:nmtdoctor_app/screens/healthchecks/cart.dart';
+import 'package:nmtdoctor_app/screens/healthchecks/healthchecks.dart';
+import 'package:nmtdoctor_app/screens/healthpacks/healthpacks.dart';
+import 'package:nmtdoctor_app/screens/home/home.dart';
+import 'package:nmtdoctor_app/screens/profile/profile.dart';
+import 'package:nmtdoctor_app/screens/receipts/receipts.dart';
+import 'package:nmtdoctor_app/screens/reports/reports.dart';
+import 'package:nmtdoctor_app/screens/requestcall/requestcall.dart';
 
 final GoRouter router = GoRouter(
   routes: [

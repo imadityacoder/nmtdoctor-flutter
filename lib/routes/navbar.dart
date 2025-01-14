@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_navbar.dart';
+import 'package:nmtdoctor_app/widgets/nmtd_navbar.dart';
 import 'package:go_router/go_router.dart';
 
 class NmtdNavbar extends StatelessWidget {

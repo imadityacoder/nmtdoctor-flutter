@@ -1,11 +1,21 @@
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nmt_doctor_app/api/local_data.dart';
-import 'package:nmt_doctor_app/providers/cart_provider.dart';
-import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
-import 'package:nmt_doctor_app/routes/routes.dart';
+import 'package:flutter/services.dart';
+// import 'package:nmtdoctor_app/firebase_options.dart';
+import 'package:nmtdoctor_app/providers/cart_provider.dart';
+import 'package:nmtdoctor_app/providers/healthcheck_provider.dart';
+import 'package:nmtdoctor_app/providers/healthpack_provider.dart';
+import 'package:nmtdoctor_app/routes/routes.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   runApp(
     MultiProvider(
       providers: [
@@ -14,7 +24,10 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => HealthpackProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SearchProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -41,10 +54,13 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         elevatedButtonTheme: const ElevatedButtonThemeData(
-            style: ButtonStyle(
-                backgroundColor:
-                    WidgetStatePropertyAll(Color.fromARGB(255, 50, 190, 255)),
-                foregroundColor: WidgetStatePropertyAll(Colors.white))),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(
+              Color.fromARGB(255, 50, 190, 255),
+            ),
+            foregroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+        ),
       ),
       builder: (context, child) {
         return PopScope(

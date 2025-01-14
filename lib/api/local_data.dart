@@ -140,102 +140,93 @@ List<Map<String, dynamic>> popularCheckups = [
 
 List<Map<String, dynamic>> healthPacks = [
   {
+    "cardId": "1",
     "title": "Basic Health Checkup",
     "description":
-        "A starter pack to assess overall health, including CBC, Blood Sugar Tests, and Lipid Profile.",
+        "A starter pack designed to provide a comprehensive overview of your overall health. This package includes essential tests such as CBC, Blood Sugar Tests, and Lipid Profile to evaluate your heart health, blood parameters, and glucose levels. It's the ideal choice for individuals looking for a general health checkup to get a baseline understanding of their physical condition and identify early signs of potential health issues.",
     "price": "999",
     "preprice": "1499",
     "svgAsset": "assets/icons/sample.svg",
-    "testsIncluded": ["CBC", "Blood Sugar Tests", "Lipid Profile"],
-    "recommendedFor": "General health assessment."
   },
   {
+    "cardId": "2",
     "title": "Diabetes Care Package",
     "description":
-        "Monitor and manage diabetes with FBS, PPBS, HbA1c, and Lipid Profile.",
+        "This specialized package focuses on diabetes care and management. It includes key tests such as Fasting Blood Sugar (FBS), Postprandial Blood Sugar (PPBS), HbA1c, and Lipid Profile. These tests are designed to assess how well your body is managing blood sugar levels and to evaluate any potential long-term damage caused by diabetes. If you are at risk for diabetes or already diagnosed, this package helps you monitor your condition and make necessary lifestyle adjustments.",
     "price": "1299",
     "preprice": "1799",
     "svgAsset": "assets/icons/petri.svg",
-    "testsIncluded": ["FBS", "PPBS", "HbA1c", "Lipid Profile"],
-    "recommendedFor": "Diabetes management."
   },
   {
+    "cardId": "3",
     "title": "Liver Function Test Package",
-    "description": "Evaluate liver health with ALT, AST, Bilirubin, and more.",
+    "description":
+        "The Liver Function Test (LFT) Package is designed to provide an in-depth assessment of your liver's health and function. It includes tests like ALT, AST, and Bilirubin to evaluate liver enzymes, which can indicate liver damage or disease. This package is particularly beneficial for individuals with risk factors such as excessive alcohol consumption, obesity, or a family history of liver disease. Early detection can help prevent serious conditions such as cirrhosis or liver failure.",
     "price": "1199",
     "preprice": "1699",
     "svgAsset": "assets/icons/liver.svg",
-    "testsIncluded": ["ALT", "AST", "Bilirubin"],
-    "recommendedFor": "Liver health assessment."
   },
   {
+    "cardId": "4",
     "title": "Kidney Function Test Package",
     "description":
-        "Focused on kidney health with Serum Creatinine, BUN, and Uric Acid.",
+        "This package is designed to evaluate kidney function by testing key markers such as Serum Creatinine, Blood Urea Nitrogen (BUN), and Uric Acid. These tests can help detect kidney disease in its early stages, especially for those at risk due to conditions like hypertension, diabetes, or a family history of kidney disease. Regular monitoring can help prevent kidney failure and allow for timely intervention and treatment.",
     "price": "1099",
     "preprice": "1599",
     "svgAsset": "assets/icons/kidney.svg",
-    "testsIncluded": ["Serum Creatinine", "BUN", "Uric Acid"],
-    "recommendedFor": "Kidney health assessment."
   },
   {
+    "cardId": "5",
     "title": "Thyroid Profile Package",
     "description":
-        "Includes TSH, Free T3, and Free T4 to assess thyroid gland function.",
+        "The Thyroid Profile Package includes tests for TSH, Free T3, and Free T4, which are essential for evaluating thyroid function. Thyroid disorders can affect metabolism, energy levels, and overall health. If you experience symptoms such as fatigue, weight changes, or mood swings, this package will help diagnose potential thyroid conditions such as hypothyroidism or hyperthyroidism. It’s particularly beneficial for those with a family history of thyroid disorders or individuals experiencing unexplained symptoms.",
     "price": "899",
     "preprice": "1299",
     "svgAsset": "assets/icons/pills.svg",
-    "testsIncluded": ["TSH", "Free T3", "Free T4"],
-    "recommendedFor": "Thyroid health evaluation."
   },
   {
+    "cardId": "6",
     "title": "Heart Health Package",
     "description":
-        "Designed for cardiovascular health, including Lipid Profile, CRP, and ECG.",
+        "Designed to assess cardiovascular health, this package includes essential tests such as Lipid Profile, CRP (C-Reactive Protein), and ECG (Electrocardiogram). These tests can help detect heart disease, high cholesterol, and inflammation. If you're at risk of heart disease or have a family history of cardiovascular issues, this package is crucial in identifying potential problems early on and taking steps to protect your heart.",
     "price": "1499",
     "preprice": "1999",
     "svgAsset": "assets/icons/heart.svg",
-    "testsIncluded": ["Lipid Profile", "CRP", "ECG"],
-    "recommendedFor": "Cardiovascular health."
   },
   {
+    "cardId": "7",
     "title": "Women's Health Package",
     "description":
-        "Covers hormonal and general health for women, including CBC, Estradiol, and Thyroid Profile.",
+        "This package is tailored for women’s health, offering a thorough check-up that includes CBC (Complete Blood Count), Estradiol (a key hormone for women), and Thyroid Profile. These tests are designed to monitor general health, hormonal balance, and thyroid function. It’s especially beneficial for women at different life stages, including those experiencing menstrual irregularities, menopause, or preconception planning. Regular monitoring can help maintain optimal health and prevent issues before they arise.",
     "price": "1699",
     "preprice": "2199",
     "svgAsset": "assets/icons/nurse.svg",
-    "testsIncluded": ["CBC", "Estradiol", "Thyroid Profile"],
-    "recommendedFor": "Women’s general and hormonal health."
   },
   {
+    "cardId": "8",
     "title": "Men's Health Package",
     "description":
-        "Includes tests for men’s health, such as CBC, Testosterone, and Lipid Profile.",
+        "This package is designed to assess general health and hormonal balance in men. It includes tests such as CBC, Testosterone, and Lipid Profile, which are critical for evaluating blood health, hormone levels, and cardiovascular risk. The Men's Health Package is especially useful for men experiencing symptoms of low energy, muscle weakness, or changes in libido. It helps detect potential health issues early and promotes better health management.",
     "price": "1599",
     "preprice": "2099",
     "svgAsset": "assets/icons/doctor.svg",
-    "testsIncluded": ["CBC", "Testosterone", "Lipid Profile"],
-    "recommendedFor": "Men’s general health."
   },
   {
+    "cardId": "9",
     "title": "Full Body Checkup",
     "description":
-        "A comprehensive package covering all major health parameters.",
+        "The Full Body Checkup is a comprehensive health package that covers a wide range of tests across various health parameters. This package is designed for those who want to get a thorough evaluation of their overall health. It includes blood tests, organ function tests, and screenings for common health conditions such as high blood pressure, diabetes, and cholesterol. Ideal for individuals seeking a complete health assessment to maintain a healthy lifestyle or detect potential issues early.",
     "price": "2999",
     "preprice": "3999",
     "svgAsset": "assets/icons/kit.svg",
-    "testsIncluded": ["Complete Health Tests"],
-    "recommendedFor": "Comprehensive health assessment."
   },
   {
+    "cardId": "10",
     "title": "Iron Deficiency Panel",
     "description":
-        "Checks for anemia and iron-related disorders, including Serum Iron, TIBC, and Ferritin.",
+        "The Iron Deficiency Panel is designed to assess iron levels in your body and detect potential anemia or iron-related disorders. This package includes tests such as Serum Iron, TIBC (Total Iron Binding Capacity), and Ferritin. If you’re experiencing symptoms such as fatigue, pale skin, or weakness, this package can help identify if iron deficiency or anemia is the cause. It’s especially beneficial for women, vegetarians, and individuals with a history of iron-related issues.",
     "price": "799",
     "preprice": "1199",
     "svgAsset": "assets/icons/dna.svg",
-    "testsIncluded": ["Serum Iron", "TIBC", "Ferritin"],
-    "recommendedFor": "Iron deficiency and anemia detection."
   },
 ];
