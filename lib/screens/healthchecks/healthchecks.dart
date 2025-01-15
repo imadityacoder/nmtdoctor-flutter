@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nmtdoctor_app/api/local_data.dart';
-import 'package:nmtdoctor_app/providers/cart_provider.dart';
-import 'package:nmtdoctor_app/providers/healthcheck_provider.dart';
-import 'package:nmtdoctor_app/routes/navbar.dart';
-import 'package:nmtdoctor_app/widgets/nmtd_appbar.dart';
-import 'package:nmtdoctor_app/widgets/builders.dart';
+import 'package:nmt_doctor_app/api/local_data.dart';
+import 'package:nmt_doctor_app/providers/cart_provider.dart';
+import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
+import 'package:nmt_doctor_app/routes/navbar.dart';
+import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
+import 'package:nmt_doctor_app/widgets/builders.dart';
 import 'package:provider/provider.dart';
 
 class HealthChecksContent extends StatelessWidget {

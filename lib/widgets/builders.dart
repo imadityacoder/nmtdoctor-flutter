@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nmtdoctor_app/providers/cart_provider.dart';
-import 'package:nmtdoctor_app/providers/healthpack_provider.dart';
-import 'package:nmtdoctor_app/widgets/nmtd_snackbar.dart';
+import 'package:nmt_doctor_app/providers/cart_provider.dart';
+import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
+import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
 import 'package:provider/provider.dart';
 
 Widget buildSection1Item({
