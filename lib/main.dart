@@ -1,14 +1,18 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:nmt_doctor_app/firebase_options.dart';
+
 import 'package:nmt_doctor_app/providers/cart_provider.dart';
 import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
 import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
 import 'package:nmt_doctor_app/routes/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
