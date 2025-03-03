@@ -1,89 +1,117 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nmt_doctor_app/api/local_data.dart';
+import 'package:nmt_doctor_app/providers/cart_provider.dart';
+import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
 import 'package:nmt_doctor_app/routes/navbar.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
 import 'package:nmt_doctor_app/widgets/builders.dart';
+import 'package:provider/provider.dart';
 
 class HealthChecksContent extends StatelessWidget {
   const HealthChecksContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
     return Scaffold(
-      appBar: nmtdAppbar(),
-      bottomNavigationBar: const NmtdNavbar(),
-      body: ListView(
-        padding: const EdgeInsets.all(10.0),
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-              ),
-              const Text(
-                ' Health Checks',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          buildHealthCheckItem(
-            title: 'Complete Blood Count (CBC)',
-            preprice:'200',
-            price: '299',
-          ),
-          buildHealthCheckItem(
-            title: 'Thyroid Function Test (TFT)',
-            preprice:'200',
-            price: '499',
-          ),
-          buildHealthCheckItem(
-            title: 'Liver Function Test (LFT)',
-            preprice:'200',
-            price: '799',
-          ),
-          buildHealthCheckItem(
-            title: 'Kidney Function Test (KFT)',
-            preprice:'200',
-            price: '699',
-          ),
-          buildHealthCheckItem(
-            title: 'Blood Glucose Test',
-            preprice:'200',
-            price: '199',
-          ),
-          buildHealthCheckItem(
-            title: 'Lipid Profile Test',
-            preprice:'200',
-            price: '599',
-          ),
-          buildHealthCheckItem(
-            title: 'Hemoglobin Test',
-            preprice:'200',
-            price: '149',
-          ),
-          buildHealthCheckItem(
-            title: 'Vitamin D Test',
-            preprice:'200',
-            price: '899',
-          ),
-          buildHealthCheckItem(
-            title: 'Iron Deficiency Test',
-            preprice:'200',
-            price: '399',
-          ),
-        ],
+      appBar: nmtdAppbar(
+        title: const Text(
+          'Health Checks',
+          
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push('/health-checks/cart');
+      bottomNavigationBar: const NmtdNavbar(),
+      body: Consumer<SearchProvider>(
+        builder: (context, searchProvider, child) {
+          final filteredHealthChecks = healthChecks.where((item) {
+            final title = item['title']!.toLowerCase();
+            return title.contains(searchProvider.query.toLowerCase());
+          }).toList();
+
+          return Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white54,
+                  prefixIcon: const Icon(Icons.search),
+                  hintText: "Search health checks...",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  suffixIcon: searchController.text.isEmpty
+                      ? null
+                      : IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            searchController.clear();
+                            searchProvider.updateQuery('');
+                          },
+                        ),
+                ),
+                onChanged: (value) {
+                  searchProvider.updateQuery(value);
+                },
+                onSubmitted: (value) {
+                  searchProvider.updateQuery(value);
+                },
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(10.0),
+                children: filteredHealthChecks.map(
+                  (item) {
+                    return buildHealthCheckItem(
+                      context: context,
+                      title: item['title']!,
+                      price: item['price']!,
+                      preprice: item['preprice']!,
+                    );
+                  },
+                ).toList(),
+              ),
+            ),
+          ]);
         },
-        child: const Icon(Icons.shopping_cart_rounded),
+      ),
+      
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightBlue[300],
+        onPressed: () {
+          context.push("/health-checks/cart");
+        },
+        child: Consumer<CartProvider>(
+          builder: (context, cart, child) {
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                const Icon(Icons.shopping_cart),
+                if (cart.items.isNotEmpty)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: CircleAvatar(
+                      radius: 7,
+                      backgroundColor: Colors.redAccent,
+                      child: Text(
+                        cart.items.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
-
-
 }

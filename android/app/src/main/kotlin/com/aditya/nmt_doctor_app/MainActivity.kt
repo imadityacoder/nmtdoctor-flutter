@@ -1,4 +1,4 @@
-package com.example.nmt_doctor_app
+package com.aditya.nmt_doctor_app
 
 import io.flutter.embedding.android.FlutterActivity
 

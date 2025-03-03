@@ -1,8 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.aditya.nmt_doctor_app">
     <application
         android:label="NMT Doctor"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity" android:exported="true">
+            <intent-filter android:label="flutter_web_auth_2">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="appwrite-callback-67bd465c003b91ff03f1" />
+        </intent-filter>
+    </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,6 +39,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <meta-data
+    android:name="com.google.android.gms.client_id"
+    android:value="240319457772-rmkg262ebsv7cgo5jeg0keoif2hespu0.apps.googleusercontent.com" />
+
+           
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

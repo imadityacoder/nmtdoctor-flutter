@@ -1,152 +1,180 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nmt_doctor_app/providers/user_provider.dart';
 import 'package:nmt_doctor_app/routes/navbar.dart';
+import 'package:nmt_doctor_app/screens/auth/edit_detail.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
+import 'package:provider/provider.dart';
 
-class ProfileContent extends StatelessWidget {
-  final String userName;
-  final String email;
-  final String profileImageUrl;
+class ProfileContent extends StatefulWidget {
+  const ProfileContent({super.key});
 
-  const ProfileContent({super.key, 
-    this.userName = 'John Doe',
-    this.email = 'johndoe@example.com',
-    this.profileImageUrl = 'https://via.placeholder.com/150', // Placeholder Image
-  });
+  @override
+  State<ProfileContent> createState() => _ProfileContentState();
+}
+
+class _ProfileContentState extends State<ProfileContent> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<UserProvider>(context, listen: false).fetchUserData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final userData = userProvider.userData;
+    final isLoading = userProvider.isLoading;
+
     return Scaffold(
-      appBar: nmtdAppbar(),
+      appBar: nmtdAppbar(
+        title: const Text('My Profile'),
+        actionIcon: Icons.logout_rounded,
+        actionFunction: () => _showLogoutConfirmation(context),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : userData == null
+              ? const Center(child: Text("User details not available"))
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Card(
+                        elevation: 4,
+                        margin: const EdgeInsets.all(16),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 40.0, horizontal: 8.0),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                minRadius: 30,
+                                maxRadius: 40,
+                                child: Icon(
+                                  Icons.account_circle_outlined,
+                                  size: 80,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    userData['fullName'] ?? 'Guest',
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    userData['email'] ?? '-- --',
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  Text(
+                                    userData['phone'] ?? '-- --',
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.grey),
+                                onPressed: userData.isNotEmpty
+                                    ? () => showEditUserDetailForm(
+                                        context, userData)
+                                    : null, // Disable if no data
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      _buildSectionTitle("My Details"),
+                      _buildProfileOption(
+                        "Family Members",
+                        Icons.group,
+                        () => context.push('/family-member'),
+                      ),
+                      _buildProfileOption(
+                        "Prescription",
+                        Icons.file_copy,
+                        () {},
+                      ),
+                      _buildProfileOption(
+                        "Address Book",
+                        Icons.location_on,
+                        () => context.push('/address'),
+                      ),
+                      _buildProfileOption(
+                          "Bookings & Reports", Icons.shopping_bag, () {}),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Center(
+                        child: Text(
+                          "Made With ♥ in India",
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
       bottomNavigationBar: const NmtdNavbar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            // Profile Image
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(profileImageUrl),
-            ),
-            const SizedBox(height: 10),
+    );
+  }
 
-            // User Name
-            Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 5),
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Text(title,
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+    );
+  }
 
-            // User Email
-            Text(
-              email,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade600,
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Profile Options
-            _buildProfileOption(
-              icon: Icons.person_outline,
-              title: 'Edit Profile',
-              onTap: () {
-                // Navigate to Edit Profile Page
-              },
-            ),
-            _buildProfileOption(
-              icon: Icons.history,
-              title: 'Order History',
-              onTap: () {
-                // Navigate to Order History Page
-              },
-            ),
-            _buildProfileOption(
-              icon: Icons.lock_outline,
-              title: 'Change Password',
-              onTap: () {
-                // Navigate to Change Password Page
-              },
-            ),
-            _buildProfileOption(
-              icon: Icons.settings,
-              title: 'Settings',
-              onTap: () {
-                // Navigate to Settings Page
-              },
-            ),
-            _buildProfileOption(
-              icon: Icons.help_outline,
-              title: 'Help & Support',
-              onTap: () {
-                // Navigate to Help & Support Page
-              },
-            ),
-
-            const SizedBox(height: 30),
-
-            // Logout Button
-            ElevatedButton.icon(
-              onPressed: () {
-                // Handle Logout Logic
-                _showLogoutConfirmation(context);
-              },
-              icon: const Icon(Icons.logout),
-              label: const Text('Logout'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
-            ),
-          ],
-        ),
+  Widget _buildProfileOption(String title, IconData icon, VoidCallback onTap) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+        leading: Icon(icon, color: Colors.black),
+        title: Text(title,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+        trailing:
+            const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+        onTap: onTap,
       ),
     );
   }
 
-  // Widget for Profile Options
-  Widget _buildProfileOption({
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.blueAccent),
-      title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: onTap,
-    );
-  }
-
-  // Logout Confirmation Dialog
   void _showLogoutConfirmation(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to log out?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Perform logout operation here
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-            child: const Text(
-              'Logout',
-              style: TextStyle(color: Colors.redAccent),
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Logout"),
+          content: const Text("Are you sure you want to log out?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
             ),
-          ),
-        ],
-      ),
+            TextButton(
+              onPressed: () async {
+                
+                if (context.mounted) {
+                  context.go('/signup');
+                }
+              },
+              child: const Text("Logout",
+                  style: TextStyle(color: Colors.redAccent)),
+            ),
+          ],
+        );
+      },
     );
   }
 }
