@@ -66,9 +66,6 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
 
   @override
   Widget build(BuildContext context) {
-    final familyProvider =
-        Provider.of<FamilyMemberProvider>(context, listen: false);
-
     return Scaffold(
       appBar: nmtdAppbar(title: const Text("Family Members")),
       body: Padding(
@@ -78,8 +75,8 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
             Expanded(
               child: Consumer<FamilyMemberProvider>(
                 builder: (context, provider, _) {
-                  return FutureBuilder<List<FamilyMember>>(
-                    future: familyProvider.getFamilyMembers(),
+                  return StreamBuilder<List<FamilyMember>>(
+                    stream: provider.getFamilyMembers(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
@@ -139,11 +136,16 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
               ),
             ),
             ElevatedButton(
-              onPressed: _showBottomSheet,
               style: const ButtonStyle(
-                  minimumSize:
-                      WidgetStatePropertyAll(Size(double.infinity, 30))),
-              child: const Text("Add Family Member"),
+                minimumSize: WidgetStatePropertyAll(
+                  Size(double.infinity, 50),
+                ),
+              ),
+              onPressed: _showBottomSheet,
+              child: const Text(
+                "Add Family Member",
+                style: TextStyle(fontSize: 17),
+              ),
             ),
           ],
         ),
@@ -232,10 +234,18 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
+                  style: const ButtonStyle(
+                    minimumSize: WidgetStatePropertyAll(
+                      Size(double.infinity, 50),
+                    ),
+                  ),
                   onPressed: _isLoading ? null : _submitForm,
                   child: _isLoading
                       ? const CircularProgressIndicator()
-                      : const Text('Submit'),
+                      : const Text(
+                          'Submit',
+                          style: TextStyle(fontSize: 17),
+                        ),
                 ),
                 const SizedBox(height: 10),
               ],

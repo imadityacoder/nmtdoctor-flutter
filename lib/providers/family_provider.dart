@@ -1,5 +1,5 @@
-import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' as models;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // Family Member Model
@@ -20,7 +20,6 @@ class FamilyMember {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
       'age': age,
       'gender': gender,
@@ -28,9 +27,9 @@ class FamilyMember {
     };
   }
 
-  static FamilyMember fromMap(Map<String, dynamic> map) {
+  static FamilyMember fromMap(String id, Map<String, dynamic> map) {
     return FamilyMember(
-      id: map['id'],
+      id: id,
       name: map['name'],
       age: map['age'],
       gender: map['gender'],
@@ -39,81 +38,65 @@ class FamilyMember {
   }
 }
 
-// Family Member Provider using Appwrite & Provider
+// Family Member Provider using Firebase & Provider
 class FamilyMemberProvider extends ChangeNotifier {
-  late final Databases _databases;
-  late final Account _account;
-  final String _databaseId =
-      "67bd478e001b531435c6"; // Replace with actual database ID
-  final String _collectionId =
-      "67beb26a0018a5f9a99e"; // Replace with actual collection ID
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  FamilyMemberProvider({Databases? databases, Account? account}) {
-    _databases = databases ?? Databases(Client());
-    _account = account ?? Account(Client());
-  }
-
-  Future<String?> get _uid async {
-    try {
-      models.User user = await _account.get();
-      return user.$id;
-    } catch (e) {
-      return null;
-    }
-  }
+  String get _uid => _auth.currentUser?.uid ?? '';
 
   // Add a family member under the user's UID
   Future<void> addFamilyMember(FamilyMember member) async {
-    String? uid = await _uid;
-    if (uid == null) return;
+    if (_uid.isEmpty) return;
 
-    await _databases.createDocument(
-      databaseId: _databaseId,
-      collectionId: _collectionId,
-      documentId: member.id,
-      data: member.toMap(),
-      permissions: [
-        Permission.read("user:$uid"),
-        Permission.update("user:$uid"),
-        Permission.delete("user:$uid"),
-      ],
-    );
+    await _firestore.collection('family_members').doc(_uid).update({
+      member.id: member.toMap(),
+    }).catchError((_) async {
+      await _firestore.collection('family_members').doc(_uid).set({
+        member.id: member.toMap(),
+      });
+    });
+
     notifyListeners();
   }
 
   // Update a family member
   Future<void> updateFamilyMember(FamilyMember member) async {
-    await _databases.updateDocument(
-      databaseId: _databaseId,
-      collectionId: _collectionId,
-      documentId: member.id,
-      data: member.toMap(),
-    );
+    if (_uid.isEmpty) return;
+
+    await _firestore.collection('family_members').doc(_uid).update({
+      member.id: member.toMap(), // Updates the specific member details
+    });
+
     notifyListeners();
   }
 
   // Delete a family member
   Future<void> deleteFamilyMember(String memberId) async {
-    await _databases.deleteDocument(
-      databaseId: _databaseId,
-      collectionId: _collectionId,
-      documentId: memberId,
-    );
+    if (_uid.isEmpty) return;
+
+    await _firestore.collection('family_members').doc(_uid).update({
+      memberId: FieldValue.delete(),
+    });
+
     notifyListeners();
   }
 
   // Fetch all family members for the logged-in user
-  Future<List<FamilyMember>> getFamilyMembers() async {
-    String? uid = await _uid;
-    if (uid == null) return [];
+  Stream<List<FamilyMember>> getFamilyMembers() {
+    if (_uid.isEmpty) return const Stream.empty();
 
-    final response = await _databases.listDocuments(
-      databaseId: _databaseId,
-      collectionId: _collectionId,
-    );
+    return _firestore
+        .collection('family_members')
+        .doc(_uid)
+        .snapshots()
+        .map((snapshot) {
+      if (!snapshot.exists || snapshot.data() == null) return [];
 
-    return response.documents
-        .map((doc) => FamilyMember.fromMap(doc.data))
-        .toList();
+      final data = snapshot.data()!;
+      return data.entries
+          .map((entry) => FamilyMember.fromMap(entry.key, entry.value))
+          .toList();
+    });
   }
 }

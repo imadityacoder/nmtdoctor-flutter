@@ -220,8 +220,7 @@ class _SignUpContentState extends State<SignUpContent> {
               type: NoticeType.success);
           Future.delayed(const Duration(seconds: 1), () => context.go('/home'));
         } catch (e) {
-          NmtdSnackbar.show(context, 'Google sign-up failed!',
-              type: NoticeType.error);
+          NmtdSnackbar.show(context, '$e', type: NoticeType.error);
         }
       },
       style: ElevatedButton.styleFrom(

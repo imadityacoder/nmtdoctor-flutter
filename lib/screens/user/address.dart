@@ -17,9 +17,8 @@ class AddressForm extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: FutureBuilder<List<Address>>(
-              // Changed StreamBuilder to FutureBuilder
-              future: addressProvider.getAddresses(),
+            child: StreamBuilder<List<Address>>(
+              stream: addressProvider.getAddresses(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -50,29 +49,30 @@ class AddressForm extends StatelessWidget {
                         subtitle: Text(
                           '${address.street}, ${address.city}, ${address.state} - ${address.pincode}',
                         ),
-                        leading: const Icon(Icons.location_on),
-                        trailing: PopupMenuButton<String>(
-                          // Fixed MenuAnchor issue
-                          onSelected: (value) {
-                            if (value == 'edit') {
-                              // Implement edit functionality here
-                            } else if (value == 'delete') {
-                              addressProvider.deleteAddress(address.id);
-                            }
+                        leading: const Icon(
+                          Icons.location_on,
+                        ),
+                        trailing: MenuAnchor(
+                          builder: (context, controller, child) {
+                            return IconButton(
+                              icon: const Icon(Icons.more_vert),
+                              onPressed: () => controller.open(),
+                            );
                           },
-                          itemBuilder: (context) => [
-                            const PopupMenuItem(
-                              value: 'edit',
-                              child: ListTile(
-                                leading: Icon(Icons.edit),
-                                title: Text("Edit"),
+                          menuChildren: [
+                            MenuItemButton(
+                              child: TextButton.icon(
+                                onPressed: () {},
+                                label: const Text("Edit"),
+                                icon: const Icon(Icons.edit),
                               ),
                             ),
-                            const PopupMenuItem(
-                              value: 'delete',
-                              child: ListTile(
-                                leading: Icon(Icons.delete),
-                                title: Text("Delete"),
+                            MenuItemButton(
+                              child: TextButton.icon(
+                                onPressed: () =>
+                                    addressProvider.deleteAddress(address.id),
+                                label: const Text("Delete"),
+                                icon: const Icon(Icons.delete),
                               ),
                             ),
                           ],
@@ -88,10 +88,15 @@ class AddressForm extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               style: const ButtonStyle(
-                  minimumSize:
-                      WidgetStatePropertyAll(Size(double.infinity, 30))),
+                minimumSize: WidgetStatePropertyAll(
+                  Size(double.infinity, 50),
+                ),
+              ),
               onPressed: () => _showAddAddressSheet(context),
-              child: const Text("Add Address"),
+              child: const Text(
+                "Add Address",
+                style: TextStyle(fontSize: 17),
+              ),
             ),
           ),
         ],
@@ -140,9 +145,7 @@ class AddressForm extends StatelessWidget {
                       ),
                       TextButton.icon(
                         label: const Text('Use my location'),
-                        onPressed: () {
-                          // Implement location fetching logic
-                        },
+                        onPressed: () {},
                         icon: const Icon(Icons.my_location_outlined),
                       ),
                     ],
@@ -166,6 +169,11 @@ class AddressForm extends StatelessWidget {
                       keyboardType: TextInputType.number),
                   const SizedBox(height: 20),
                   ElevatedButton(
+                    style: const ButtonStyle(
+                      minimumSize: WidgetStatePropertyAll(
+                        Size(double.infinity, 50),
+                      ),
+                    ),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         final newAddress = Address(
@@ -183,7 +191,7 @@ class AddressForm extends StatelessWidget {
                     },
                     child: const Text(
                       'Save Address',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 17),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -200,10 +208,8 @@ class AddressForm extends StatelessWidget {
       {TextInputType keyboardType = TextInputType.text}) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-      ),
+      decoration:
+          InputDecoration(labelText: label, border: const OutlineInputBorder()),
       keyboardType: keyboardType,
       validator: (value) =>
           value == null || value.isEmpty ? 'Enter $label' : null,

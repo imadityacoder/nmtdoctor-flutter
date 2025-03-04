@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart' as models;
-import 'package:nmt_doctor_app/main.dart';
 
-// Address Model
+// address_model.dart
 class Address {
   String id;
   String title;
@@ -22,7 +21,7 @@ class Address {
     required this.city,
     required this.state,
     required this.pincode,
-    this.latitude = 0.0,
+    this.latitude = 0.0, // Will be auto-updated
     this.longitude = 0.0,
   });
 
@@ -52,36 +51,23 @@ class Address {
   }
 }
 
-// Address Provider using Appwrite & Provider
 class AddressProvider extends ChangeNotifier {
-  final Databases _database;
-  final Account _account;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Initialize database and collection IDs locally
-  static const String _databaseId = "67bd478e001b531435c6";
-  static const String _collectionId = "67beb27600202e9b9d4d";
+  String get _uid => _auth.currentUser?.uid ?? '';
 
-  AddressProvider()
-      : _database = Databases(client),
-        _account = Account(client);
-
-  Future<String?> _getUserId() async {
-    try {
-      models.User user = await _account.get();
-      return user.$id;
-    } catch (e) {
-      print("Error fetching user: $e");
-      return null;
-    }
-  }
-
+  // Get current location
   Future<Position> _getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception("Location services are disabled.");
     }
 
-    LocationPermission permission = await Geolocator.checkPermission();
+    permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
@@ -90,15 +76,16 @@ class AddressProvider extends ChangeNotifier {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw Exception("Location permissions are permanently denied.");
+      throw Exception(
+          "Location permissions are permanently denied. Enable them in settings.");
     }
 
     return await Geolocator.getCurrentPosition();
   }
 
+  // Add a new address (Auto-fetch location)
   Future<void> addAddress(Address address) async {
-    String? userId = await _getUserId();
-    if (userId == null) return;
+    if (_uid.isEmpty) return;
 
     try {
       Position position = await _getCurrentLocation();
@@ -113,52 +100,39 @@ class AddressProvider extends ChangeNotifier {
         longitude: position.longitude,
       );
 
-      await _database.createDocument(
-        databaseId: _databaseId,
-        collectionId: _collectionId,
-        documentId: newAddress.id,
-        data: newAddress.toMap(),
-        permissions: [
-          Permission.read(Role.user(userId)),
-          Permission.write(Role.user(userId)),
-        ],
+      await _firestore.collection('addresses').doc(_uid).set(
+        {newAddress.id: newAddress.toMap()},
+        SetOptions(merge: true),
       );
 
       notifyListeners();
     } catch (e) {
-      print("Error adding address: $e");
+      print("Error getting location: $e");
     }
   }
 
-  Future<List<Address>> getAddresses() async {
-    String? userId = await _getUserId();
-    if (userId == null) return [];
+  
+  Stream<List<Address>> getAddresses() {
+    if (_uid.isEmpty) return const Stream.empty();
 
-    try {
-      models.DocumentList result = await _database.listDocuments(
-        databaseId: _databaseId,
-        collectionId: _collectionId,
-      );
+    return _firestore.collection('addresses').doc(_uid).snapshots().map((doc) {
+      if (!doc.exists || doc.data() == null) return [];
 
-      return result.documents
-          .map((doc) => Address.fromMap(doc.$id, doc.data))
+      return doc
+          .data()!
+          .entries
+          .map((entry) => Address.fromMap(entry.key, entry.value))
           .toList();
-    } catch (e) {
-      print("Error fetching addresses: $e");
-      return [];
-    }
+    });
   }
 
   Future<void> deleteAddress(String addressId) async {
-    try {
-      await _database.deleteDocument(
-        databaseId: _databaseId,
-        collectionId: _collectionId,
-        documentId: addressId,
-      );
-      notifyListeners();
-    } catch (e) {
-      print("Error deleting address: $e");
-    }
+    if (_uid.isEmpty) return;
+
+    await _firestore.collection('addresses').doc(_uid).update({
+      addressId: FieldValue.delete(),
+    });
+
+    notifyListeners();
   }
 }

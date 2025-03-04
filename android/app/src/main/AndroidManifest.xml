@@ -3,14 +3,6 @@
         android:label="NMT Doctor"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity" android:exported="true">
-            <intent-filter android:label="flutter_web_auth_2">
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="appwrite-callback-67bd465c003b91ff03f1" />
-        </intent-filter>
-    </activity>
 
         <activity
             android:name=".MainActivity"
@@ -39,10 +31,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-            <meta-data
-    android:name="com.google.android.gms.client_id"
-    android:value="240319457772-rmkg262ebsv7cgo5jeg0keoif2hespu0.apps.googleusercontent.com" />
-
+           
            
     </application>
     <!-- Required to query activities that can process text, see:
@@ -56,7 +45,9 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

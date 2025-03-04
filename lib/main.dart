@@ -1,6 +1,7 @@
-import 'package:appwrite_auth_kit/appwrite_auth_kit.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nmt_doctor_app/firebase_options.dart';
 import 'package:nmt_doctor_app/providers/address_provider.dart';
 import 'package:nmt_doctor_app/providers/auth_provider.dart';
 import 'package:nmt_doctor_app/providers/cart_provider.dart';
@@ -12,13 +13,12 @@ import 'package:nmt_doctor_app/routes/routes.dart';
 import 'package:nmt_doctor_app/utils/themes.dart';
 import 'package:provider/provider.dart';
 
-
-final Client client = Client();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  client
-    ..setEndpoint('https://cloud.appwrite.io/v1')
-    ..setProject('67bd465c003b91ff03f1');
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -28,7 +28,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthNotifier(client)),
         ChangeNotifierProvider(create: (_) => MyAuthProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => HealthpackProvider()),
@@ -37,26 +36,21 @@ void main() async {
         ChangeNotifierProvider(create: (_) => FamilyMemberProvider()),
         ChangeNotifierProvider(create: (_) => AddressProvider()),
       ],
-      child: MyApp(myclient: client),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final Client myclient;
-
-  const MyApp({super.key, required this.myclient});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppwriteAuthKit(
-      client: myclient,
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        title: 'NMT Doctor',
-        theme: nmtDoctorTheme,
-      ),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+      title: 'NMT Doctor',
+      theme: nmtDoctorTheme,
     );
   }
 }
