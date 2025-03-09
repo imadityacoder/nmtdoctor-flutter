@@ -18,7 +18,40 @@ class HealthChecksContent extends StatelessWidget {
       appBar: nmtdAppbar(
         title: const Text(
           'Health Checks',
-          
+        ),
+        actionWidget: Consumer<CartProvider>(
+          builder: (context, cart, child) {
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    context.push("/health-checks/cart");
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                  ),
+                ),
+                if (cart.items.isNotEmpty)
+                  Positioned(
+                    right: 7,
+                    top: 7,
+                    child: CircleAvatar(
+                      radius: 7,
+                      backgroundColor: Colors.redAccent,
+                      child: Text(
+                        cart.items.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: const NmtdNavbar(),
@@ -30,34 +63,44 @@ class HealthChecksContent extends StatelessWidget {
           }).toList();
 
           return Column(children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white54,
-                  prefixIcon: const Icon(Icons.search),
-                  hintText: "Search health checks...",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  suffixIcon: searchController.text.isEmpty
-                      ? null
-                      : IconButton(
-                          icon: const Icon(Icons.clear),
-                          onPressed: () {
-                            searchController.clear();
-                            searchProvider.updateQuery('');
-                          },
-                        ),
+            Container(
+              height: 60,
+              decoration: const BoxDecoration(
+                color: Color(0xFF003580),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
                 ),
-                onChanged: (value) {
-                  searchProvider.updateQuery(value);
-                },
-                onSubmitted: (value) {
-                  searchProvider.updateQuery(value);
-                },
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: "Search health checks...",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    suffixIcon: searchController.text.isEmpty
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              searchController.clear();
+                              searchProvider.updateQuery('');
+                            },
+                          ),
+                  ),
+                  onChanged: (value) {
+                    searchProvider.updateQuery(value);
+                  },
+                  onSubmitted: (value) {
+                    searchProvider.updateQuery(value);
+                  },
+                ),
               ),
             ),
             Expanded(
@@ -77,40 +120,6 @@ class HealthChecksContent extends StatelessWidget {
             ),
           ]);
         },
-      ),
-      
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightBlue[300],
-        onPressed: () {
-          context.push("/health-checks/cart");
-        },
-        child: Consumer<CartProvider>(
-          builder: (context, cart, child) {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                const Icon(Icons.shopping_cart),
-                if (cart.items.isNotEmpty)
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: CircleAvatar(
-                      radius: 7,
-                      backgroundColor: Colors.redAccent,
-                      child: Text(
-                        cart.items.length.toString(),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            );
-          },
-        ),
       ),
     );
   }

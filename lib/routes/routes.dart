@@ -3,7 +3,7 @@ import 'package:nmt_doctor_app/auth_warpper.dart';
 import 'package:nmt_doctor_app/screens/auth/forgot_password.dart';
 import 'package:nmt_doctor_app/screens/auth/login.dart';
 import 'package:nmt_doctor_app/screens/auth/signup.dart';
-import 'package:nmt_doctor_app/screens/healthchecks/cart.dart';
+import 'package:nmt_doctor_app/screens/healthchecks/hc_cart.dart';
 import 'package:nmt_doctor_app/screens/healthchecks/healthchecks.dart';
 import 'package:nmt_doctor_app/screens/healthpacks/healthpacks.dart';
 import 'package:nmt_doctor_app/screens/home/home.dart';

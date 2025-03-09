@@ -127,7 +127,10 @@ class _LoginContentState extends State<LoginContent> {
                         ),
                         const SizedBox(height: 10),
                         _buildLoginButton(),
-                        const SizedBox(height: 20),
+                        const SizedBox(
+                          height: 30,
+                          child: Center(child: Text('or')),
+                        ),
                         _buildGoogleLoginButton(),
                         TextButton(
                           onPressed: () => context.go('/signup'),

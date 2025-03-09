@@ -8,6 +8,7 @@ import 'package:nmt_doctor_app/providers/cart_provider.dart';
 import 'package:nmt_doctor_app/providers/family_provider.dart';
 import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
 import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
+import 'package:nmt_doctor_app/providers/location_provider.dart';
 import 'package:nmt_doctor_app/providers/user_provider.dart';
 import 'package:nmt_doctor_app/routes/routes.dart';
 import 'package:nmt_doctor_app/utils/themes.dart';
@@ -35,6 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => FamilyMemberProvider()),
         ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: const MyApp(),
     ),

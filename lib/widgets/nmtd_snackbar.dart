@@ -18,9 +18,10 @@ class NmtdSnackbar {
     final overlayState = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        bottom: type != NoticeType.info
-            ? MediaQuery.sizeOf(context).height - 130
-            : 70, // Position of the snackbar
+        bottom: type == NoticeType.info
+            ? 60
+            : MediaQuery.sizeOf(context).height - 135,
+        // Position of the snackbar
         left: 20.0,
         right: 20.0,
         child: Material(

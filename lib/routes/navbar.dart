@@ -8,7 +8,7 @@ class NmtdNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      elevation: 20,
+      elevation: 10,
       type: BottomNavigationBarType.fixed,
       currentIndex: _getCurrentIndex(context),
       onTap: (index) {

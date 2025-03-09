@@ -107,11 +107,10 @@ class AddressProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print("Error getting location: $e");
+      Exception(e);
     }
   }
 
-  
   Stream<List<Address>> getAddresses() {
     if (_uid.isEmpty) return const Stream.empty();
 
@@ -126,13 +125,32 @@ class AddressProvider extends ChangeNotifier {
     });
   }
 
+  Future<void> updateAddress(String addressId, Address updatedAddress) async {
+    if (_uid.isEmpty) return;
+
+    try {
+      await _firestore.collection('addresses').doc(_uid).update({
+        addressId: updatedAddress.toMap(),
+      });
+
+      notifyListeners();
+    } catch (e) {
+      print("Error updating address: $e");
+    }
+  }
+
+  // Delete: Remove an address
   Future<void> deleteAddress(String addressId) async {
     if (_uid.isEmpty) return;
 
-    await _firestore.collection('addresses').doc(_uid).update({
-      addressId: FieldValue.delete(),
-    });
+    try {
+      await _firestore.collection('addresses').doc(_uid).update({
+        addressId: FieldValue.delete(),
+      });
 
-    notifyListeners();
+      notifyListeners();
+    } catch (e) {
+      print("Error deleting address: $e");
+    }
   }
 }

@@ -12,7 +12,6 @@ class HealthPacksContent extends StatelessWidget {
       appBar: nmtdAppbar(
         title: const Text(
           'Health Packs',
-          
         ),
       ),
       body: ListView.builder(
@@ -23,10 +22,11 @@ class HealthPacksContent extends StatelessWidget {
           return buildHealthPackItem(
             cardId: testPack['cardId'],
             title: testPack['title']!,
+            desc: testPack['description'],
+            tests: testPack['tests'],
             svgAsset: testPack['svgAsset']!,
             preprice: testPack['preprice']!,
             price: testPack['price']!,
-            
             onTap: () {},
           );
         },

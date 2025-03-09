@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CartItem {
   final String title;
   final String price;
+  final String preprice;
 
-  CartItem({required this.title, required this.price});
+  CartItem({required this.title, required this.price, required this.preprice});
 }
 
 class CartProvider extends ChangeNotifier {
@@ -14,6 +15,8 @@ class CartProvider extends ChangeNotifier {
 
   double get total =>
       _items.fold(0.0, (sum, item) => sum + double.parse(item.price));
+  double get pretotal =>
+      _items.fold(0.0, (sum, item) => sum + double.parse(item.preprice));
 
   void addItem(CartItem item) {
     _items.add(item);

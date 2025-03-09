@@ -54,7 +54,6 @@ class _SignUpContentState extends State<SignUpContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade200,
-      // backgroundColor: const Color.fromARGB(255, 131, 133, 253),
       body: Stack(
         children: [
           const Align(
@@ -136,7 +135,10 @@ class _SignUpContentState extends State<SignUpContent> {
                         ),
                         const SizedBox(height: 20),
                         _buildSignUpButton(),
-                        const SizedBox(height: 20),
+                        const SizedBox(
+                          height: 30,
+                          child: Center(child: Text('or')),
+                        ),
                         _buildGoogleSignUpButton(),
                         TextButton(
                           onPressed: () => context.go('/login'),
