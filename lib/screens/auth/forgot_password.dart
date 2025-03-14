@@ -73,7 +73,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue.shade200,
+        color: Colors.blue.shade300,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,7 +153,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: _validateEmail,
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 ElevatedButton.icon(
                                   onPressed: _isLoading ? null : _submit,
                                   style: ButtonStyle(

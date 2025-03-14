@@ -8,6 +8,7 @@ class HcCartItem {
   final String cardId;
   final String title;
   final String price;
+<<<<<<< HEAD
   final String preprice;
   int quantity;
 
@@ -27,6 +28,23 @@ class HcCartItem {
       'preprice': preprice,
       'quantity': quantity,
     };
+=======
+
+  CartItem({required this.title, required this.price});
+}
+
+class CartProvider extends ChangeNotifier {
+  final List<CartItem> _items = []; // Cart items list
+
+  List<CartItem> get items => _items; // Getter for items
+
+  double get total =>
+      _items.fold(0.0, (sum, item) => sum + double.parse(item.price));
+
+  void addItem(CartItem item) {
+    _items.add(item);
+    notifyListeners(); // Notify widgets listening to this provider
+>>>>>>> parent of fb8340f (UI upgraded)
   }
 
   factory HcCartItem.fromMap(Map<String, dynamic> map) {

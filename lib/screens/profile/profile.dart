@@ -31,12 +31,8 @@ class _ProfileContentState extends State<ProfileContent> {
     return Scaffold(
       appBar: nmtdAppbar(
         title: const Text('My Profile'),
-        actionWidget: IconButton(
-          onPressed: () => _showLogoutConfirmation(context),
-          icon: const Icon(
-            Icons.logout_rounded,
-          ),
-        ),
+        actionIcon: Icons.logout_rounded,
+        actionFunction: () => _showLogoutConfirmation(context),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -66,47 +62,30 @@ class _ProfileContentState extends State<ProfileContent> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        userData['fullName'] ?? 'Guest',
-                                        style: const TextStyle(
-                                            fontSize: 21,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      InkWell(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(30),
-                                        ),
-                                        onTap: userData.isNotEmpty
-                                            ? () => showEditUserDetailForm(
-                                                  context,
-                                                  userData,
-                                                )
-                                            : null,
-                                        child: const Icon(
-                                          Icons.edit,
-                                          color: Colors.blueGrey,
-                                        ), // Disable if no data
-                                      ),
-                                    ],
+                                  Text(
+                                    userData['fullName'] ?? 'Guest',
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    userData['email'] ?? '-- -- --',
+                                    userData['email'] ?? '-- --',
                                     style: const TextStyle(color: Colors.grey),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    userData['phone'] ?? '-- -- --',
+                                    userData['phone'] ?? '-- --',
                                     style: const TextStyle(color: Colors.grey),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.grey),
+                                onPressed: userData.isNotEmpty
+                                    ? () => showEditUserDetailForm(
+                                        context, userData)
+                                    : null, // Disable if no data
                               ),
                             ],
                           ),
@@ -120,17 +99,26 @@ class _ProfileContentState extends State<ProfileContent> {
                         () => context.push('/family-member'),
                       ),
                       _buildProfileOption(
-                        "Address Book",
-                        Icons.location_on,
-                        () => context.push('/address'),
-                      ),
-                      _buildProfileOption(
                         "Prescription",
                         Icons.file_copy,
                         () {},
                       ),
                       _buildProfileOption(
+                        "Address Book",
+                        Icons.location_on,
+                        () => context.push('/address'),
+                      ),
+                      _buildProfileOption(
                           "Bookings & Reports", Icons.shopping_bag, () {}),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Center(
+                        child: Text(
+                          "Made With ♥ in India",
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -152,7 +140,7 @@ class _ProfileContentState extends State<ProfileContent> {
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-        leading: Icon(icon, color: Colors.black87),
+        leading: Icon(icon, color: Colors.black),
         title: Text(title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
         trailing:
@@ -176,6 +164,7 @@ class _ProfileContentState extends State<ProfileContent> {
             ),
             TextButton(
               onPressed: () async {
+                
                 if (context.mounted) {
                   context.go('/signup');
                 }

@@ -18,7 +18,12 @@ class HealthPacksContent extends StatelessWidget {
     return Scaffold(
       appBar: nmtdAppbar(
         title: const Text(
+<<<<<<< HEAD
           'Health Packages',
+=======
+          'Health Packs',
+          
+>>>>>>> parent of fb8340f (UI upgraded)
         ),
       ),
       body: ListView.builder(
@@ -28,6 +33,7 @@ class HealthPacksContent extends StatelessWidget {
           final testPack = healthPacks[index];
 
           return buildHealthPackItem(
+<<<<<<< HEAD
             cardId: testPack['cardId'] ?? '',
             title: testPack['title'] ?? 'No Title',
             desc: testPack['description'] ?? 'No Description',
@@ -41,6 +47,15 @@ class HealthPacksContent extends StatelessWidget {
                   type: NoticeType.success);
               context.push('/cart');
             },
+=======
+            cardId: testPack['cardId'],
+            title: testPack['title']!,
+            svgAsset: testPack['svgAsset']!,
+            preprice: testPack['preprice']!,
+            price: testPack['price']!,
+            
+            onTap: () {},
+>>>>>>> parent of fb8340f (UI upgraded)
           );
         },
       ),

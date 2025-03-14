@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:nmt_doctor_app/api/local_data.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
 
@@ -12,20 +13,19 @@ void showHealthPackDetails(
   required List tests,
   required String svgAsset,
 }) {
+=======
+// A helper function to show the bottom sheet.
+void showDetailPack(BuildContext context) {
+>>>>>>> parent of fb8340f (UI upgraded)
   showModalBottomSheet(
+    elevation: 4,
     context: context,
-    isScrollControlled: true,
-    elevation: 3,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) {
-      final selectedIds = tests;
-      final filteredChecks = healthChecks
-          .where((checkup) => selectedIds.contains(checkup['id']))
-          .toList();
-
+    isScrollControlled: true, // Adjusts height when keyboard appears
+    isDismissible: true, // Prevents dismissing by tapping outside
+    enableDrag: true, // Disables swipe-to-dismiss gesture
+    builder: (BuildContext context) {
       return Padding(
+<<<<<<< HEAD
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
@@ -192,8 +192,37 @@ void showHealthPackDetails(
               ),
             ],
           ),
+=======
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+>>>>>>> parent of fb8340f (UI upgraded)
         ),
+        child: const DetailPack(),
       );
     },
   );
+}
+
+
+class DetailPack extends StatelessWidget {
+  const DetailPack({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Form(
+      
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
