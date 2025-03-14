@@ -64,7 +64,8 @@ class MyAuthProvider extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       _handleAuthException(e);
     } catch (e) {
-      throw Exception('An unexpected error occurred during Google sign-in');
+      debugPrint('Google signin Error : $e');
+      throw Exception('Google SignIn failed!');
     }
   }
 

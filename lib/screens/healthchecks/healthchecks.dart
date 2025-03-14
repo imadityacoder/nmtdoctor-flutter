@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nmt_doctor_app/api/local_data.dart';
-import 'package:nmt_doctor_app/providers/cart_provider.dart';
+import 'package:nmt_doctor_app/providers/hc_cart_provider.dart';
 import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
 import 'package:nmt_doctor_app/routes/navbar.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
@@ -17,19 +17,19 @@ class HealthChecksContent extends StatelessWidget {
     return Scaffold(
       appBar: nmtdAppbar(
         title: const Text(
-          'Health Checks',
+          'Health Checkups',
         ),
-        actionWidget: Consumer<CartProvider>(
+        actionWidget: Consumer<HcCartProvider>(
           builder: (context, cart, child) {
             return Stack(
               alignment: Alignment.center,
               children: [
                 IconButton(
                   onPressed: () {
-                    context.push("/health-checks/cart");
+                    context.push("/health-checks/hc-cart");
                   },
                   icon: const Icon(
-                    Icons.shopping_cart,
+                    Icons.assignment,
                   ),
                 ),
                 if (cart.items.isNotEmpty)
@@ -110,6 +110,7 @@ class HealthChecksContent extends StatelessWidget {
                   (item) {
                     return buildHealthCheckItem(
                       context: context,
+                      cardId: item['id'],
                       title: item['title']!,
                       price: item['price']!,
                       preprice: item['preprice']!,

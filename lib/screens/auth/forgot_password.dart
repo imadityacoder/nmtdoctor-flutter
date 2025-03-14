@@ -85,7 +85,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                 "Reset Password.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Roboto',
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -176,7 +176,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
-                                            fontFamily: 'Inter',
+                                            fontFamily: 'Rubik',
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),

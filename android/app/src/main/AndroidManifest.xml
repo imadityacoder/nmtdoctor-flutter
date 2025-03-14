@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission
+    android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    android:maxSdkVersion="28"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     
     <queries>
@@ -15,9 +17,10 @@
     </queries>
 
     <application
-        android:label="NMT Doctor"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+    android:label="NMT Doctor"
+    android:icon="@mipmap/ic_launcher"
+    android:usesCleartextTraffic="true">
+
         
         <activity
             android:name=".MainActivity"

@@ -61,7 +61,7 @@ class _LoginContentState extends State<LoginContent> {
                 Text(
                   "LogIn.",
                   style: TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Roboto',
                     fontSize: 60,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,

@@ -33,8 +33,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const HealthPacksContent(),
     ),
     GoRoute(
-      path: '/health-checks/cart', // Health Checks page
-      builder: (context, state) => const CartContent(),
+      path: '/health-checks/hc-cart', // Health Checks page
+      builder: (context, state) => const HcCartContent(),
     ),
     GoRoute(
       path: '/reports',
