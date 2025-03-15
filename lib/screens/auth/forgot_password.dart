@@ -73,7 +73,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue.shade300,
+        color: Colors.blue.shade200,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +85,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                 "Reset Password.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Poppins',
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -153,7 +153,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                                   keyboardType: TextInputType.emailAddress,
                                   onChanged: _validateEmail,
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 20),
                                 ElevatedButton.icon(
                                   onPressed: _isLoading ? null : _submit,
                                   style: ButtonStyle(
@@ -176,7 +176,7 @@ class _ForgotPasswordContentState extends State<ForgotPasswordContent> {
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
-                                            fontFamily: 'Rubik',
+                                            fontFamily: 'Inter',
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),

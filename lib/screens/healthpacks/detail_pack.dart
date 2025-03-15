@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:nmt_doctor_app/api/local_data.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
 
 void showHealthPackDetails(
   BuildContext context, {
@@ -13,19 +11,20 @@ void showHealthPackDetails(
   required List tests,
   required String svgAsset,
 }) {
-=======
-// A helper function to show the bottom sheet.
-void showDetailPack(BuildContext context) {
->>>>>>> parent of fb8340f (UI upgraded)
   showModalBottomSheet(
-    elevation: 4,
     context: context,
-    isScrollControlled: true, // Adjusts height when keyboard appears
-    isDismissible: true, // Prevents dismissing by tapping outside
-    enableDrag: true, // Disables swipe-to-dismiss gesture
-    builder: (BuildContext context) {
+    isScrollControlled: true,
+    elevation: 3,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      final selectedIds = tests;
+      final filteredChecks = healthChecks
+          .where((checkup) => selectedIds.contains(checkup['id']))
+          .toList();
+
       return Padding(
-<<<<<<< HEAD
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
@@ -36,7 +35,7 @@ void showDetailPack(BuildContext context) {
               Center(
                 child: Container(
                   height: 4,
-                  width: 50,
+                  width: 40,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
@@ -49,12 +48,12 @@ void showDetailPack(BuildContext context) {
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 23,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF003580),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
 
               // Price Section
               Row(
@@ -62,17 +61,17 @@ void showDetailPack(BuildContext context) {
                 children: [
                   Text(
                     "₹$price",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22,
-                      color: Colors.green.shade500,
+                      color: Colors.green,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     "₹$preprice",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
-                      color: Colors.red.shade500,
+                      color: Colors.red,
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
@@ -84,17 +83,18 @@ void showDetailPack(BuildContext context) {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context); // Example booking logic
-                  NmtdSnackbar.show(context, "This is now in updating",
-                      type: NoticeType.warning);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Booking confirmed!"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF003580),
                   minimumSize: const Size(double.infinity, 45),
                 ),
-                child: const Text(
-                  "Add to cart",
-                  style: TextStyle(fontSize: 16),
-                ),
+                child: const Text("Book now"),
               ),
               const SizedBox(height: 12),
 
@@ -106,10 +106,7 @@ void showDetailPack(BuildContext context) {
                     children: [
                       Icon(Icons.home, color: Color(0xFF003580)),
                       SizedBox(width: 8),
-                      Text(
-                        "Home Sample Collection Available",
-                        overflow: TextOverflow.clip,
-                      ),
+                      Text("Home Sample Collection Available"),
                     ],
                   ),
                   Column(
@@ -129,7 +126,7 @@ void showDetailPack(BuildContext context) {
                 "Description",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 16,
                 ),
               ),
               Text(desc),
@@ -140,13 +137,14 @@ void showDetailPack(BuildContext context) {
                 "What is it for?",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 16,
                 ),
               ),
 
               // List of Tests (Fixed)
               SizedBox(
-                // Dynamic height for better UX
+                height: filteredChecks.length *
+                    55.0, // Dynamic height for better UX
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics:
@@ -156,9 +154,9 @@ void showDetailPack(BuildContext context) {
                     final checkup = filteredChecks[index];
                     return ListTile(
                       title: Text(checkup['title']),
-                      leading: const Icon(
-                        Icons.verified_outlined,
-                        color: Colors.green,
+                      leading: Icon(
+                        Icons.check_circle,
+                        color: Colors.green.shade600,
                       ),
                     );
                   },
@@ -171,58 +169,14 @@ void showDetailPack(BuildContext context) {
                 "Sample Type",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 16,
                 ),
               ),
-              const Row(
-                children: [
-                  Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Blood"),
-                      )),
-                  Card(
-                      elevation: 3,
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Urine"),
-                      )),
-                ],
-              ),
+              const Text("Urine and Blood"),
             ],
           ),
-=======
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
->>>>>>> parent of fb8340f (UI upgraded)
         ),
-        child: const DetailPack(),
       );
     },
   );
-}
-
-
-class DetailPack extends StatelessWidget {
-  const DetailPack({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Form(
-      
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

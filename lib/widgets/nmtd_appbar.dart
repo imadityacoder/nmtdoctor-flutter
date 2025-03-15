@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-AppBar nmtdAppbar({required title,IconData? actionIcon, VoidCallback? actionFunction}) {
+AppBar nmtdAppbar({required title, Widget? actionWidget}) {
   return AppBar(
-    elevation: 10,
     title: title,
     actions: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: IconButton(
-          onPressed: actionFunction,
-          icon: Icon(actionIcon),
-        ),
+        child: actionWidget,
       ),
     ],
   );

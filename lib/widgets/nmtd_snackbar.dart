@@ -13,14 +13,15 @@ class NmtdSnackbar {
     BuildContext context,
     String message, {
     NoticeType type = NoticeType.info,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 4),
   }) {
     final overlayState = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        bottom: type != NoticeType.info
-            ? MediaQuery.sizeOf(context).height - 130
-            : 70, // Position of the snackbar
+        bottom: type == NoticeType.info
+            ? 60
+            : MediaQuery.sizeOf(context).height - 135,
+        // Position of the snackbar
         left: 20.0,
         right: 20.0,
         child: Material(
@@ -52,7 +53,7 @@ class NmtdSnackbar {
                     message,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontFamily: "Roboto",
+                      fontFamily: "Poppins",
                     ),
                   ),
                 ),

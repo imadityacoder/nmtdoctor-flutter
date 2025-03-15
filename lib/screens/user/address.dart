@@ -24,6 +24,10 @@ class AddressForm extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
 
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Center(child: Text('No addresses found.'));
                 }
@@ -52,30 +56,31 @@ class AddressForm extends StatelessWidget {
                         leading: const Icon(
                           Icons.location_on,
                         ),
-                        trailing: MenuAnchor(
-                          builder: (context, controller, child) {
-                            return IconButton(
-                              icon: const Icon(Icons.more_vert),
-                              onPressed: () => controller.open(),
-                            );
-                          },
-                          menuChildren: [
-                            MenuItemButton(
-                              child: TextButton.icon(
-                                onPressed: () {},
-                                label: const Text("Edit"),
-                                icon: const Icon(Icons.edit),
-                              ),
+                        trailing: PopupMenuButton(
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'edit',
+                              child: Text("Edit"),
                             ),
-                            MenuItemButton(
-                              child: TextButton.icon(
-                                onPressed: () =>
-                                    addressProvider.deleteAddress(address.id),
-                                label: const Text("Delete"),
-                                icon: const Icon(Icons.delete),
+                            const PopupMenuItem(
+                              value: 'delete',
+                              child: Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
                               ),
                             ),
                           ],
+                          onSelected: (value) async {
+                            if (value == 'edit') {
+                              _showEditAddressSheet(context, address);
+                            } else if (value == 'delete') {
+                              bool confirmDelete =
+                                  await _confirmDeleteDialog(context);
+                              if (confirmDelete) {
+                                addressProvider.deleteAddress(address.id);
+                              }
+                            }
+                          },
                         ),
                       ),
                     );
@@ -87,10 +92,8 @@ class AddressForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              style: const ButtonStyle(
-                minimumSize: WidgetStatePropertyAll(
-                  Size(double.infinity, 50),
-                ),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () => _showAddAddressSheet(context),
               child: const Text(
@@ -115,6 +118,87 @@ class AddressForm extends StatelessWidget {
     final TextEditingController stateController = TextEditingController();
     final TextEditingController pincodeController = TextEditingController();
 
+    _showAddressBottomSheet(
+      context,
+      title: "Add Address",
+      formKey: formKey,
+      controllers: [
+        titleController,
+        streetController,
+        cityController,
+        stateController,
+        pincodeController
+      ],
+      onSave: () {
+        if (formKey.currentState!.validate()) {
+          final newAddress = Address(
+            id: const Uuid().v4(),
+            title: titleController.text,
+            street: streetController.text,
+            city: cityController.text,
+            state: stateController.text,
+            pincode: pincodeController.text,
+          );
+
+          addressProvider.addAddress(newAddress);
+          Navigator.pop(context);
+        }
+      },
+    );
+  }
+
+  void _showEditAddressSheet(BuildContext context, Address address) {
+    final addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
+    final formKey = GlobalKey<FormState>();
+
+    final TextEditingController editTitleController =
+        TextEditingController(text: address.title);
+    final TextEditingController editStreetController =
+        TextEditingController(text: address.street);
+    final TextEditingController editCityController =
+        TextEditingController(text: address.city);
+    final TextEditingController editStateController =
+        TextEditingController(text: address.state);
+    final TextEditingController editPincodeController =
+        TextEditingController(text: address.pincode);
+
+    _showAddressBottomSheet(
+      context,
+      title: "Edit Address",
+      formKey: formKey,
+      controllers: [
+        editTitleController,
+        editStreetController,
+        editCityController,
+        editStateController,
+        editPincodeController
+      ],
+      onSave: () {
+        if (formKey.currentState!.validate()) {
+          final updatedAddress = Address(
+            id: address.id,
+            title: editTitleController.text,
+            street: editStreetController.text,
+            city: editCityController.text,
+            state: editStateController.text,
+            pincode: editPincodeController.text,
+          );
+
+          addressProvider.updateAddress(address.id, updatedAddress);
+          Navigator.pop(context);
+        }
+      },
+    );
+  }
+
+  void _showAddressBottomSheet(
+    BuildContext context, {
+    required String title,
+    required GlobalKey<FormState> formKey,
+    required List<TextEditingController> controllers,
+    required VoidCallback onSave,
+  }) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -133,62 +217,34 @@ class AddressForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Add Address*',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton.icon(
-                        label: const Text('Use my location'),
-                        onPressed: () {},
-                        icon: const Icon(Icons.my_location_outlined),
-                      ),
-                    ],
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  _buildTextField(
-                      titleController, 'Title (e.g., Home, Office)'),
+                  _buildTextField(controllers[0], 'Title (e.g., Home, Office)'),
                   const SizedBox(height: 10),
-                  _buildTextField(streetController, 'Street'),
+                  _buildTextField(controllers[1], 'Street'),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Expanded(child: _buildTextField(cityController, 'City')),
+                      Expanded(child: _buildTextField(controllers[2], 'City')),
                       const SizedBox(width: 10),
-                      Expanded(
-                          child: _buildTextField(stateController, 'State')),
+                      Expanded(child: _buildTextField(controllers[3], 'State')),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  _buildTextField(pincodeController, 'Pincode',
+                  _buildTextField(controllers[4], 'Pincode',
                       keyboardType: TextInputType.number),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    style: const ButtonStyle(
-                      minimumSize: WidgetStatePropertyAll(
-                        Size(double.infinity, 50),
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
                     ),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        final newAddress = Address(
-                          id: const Uuid().v4(),
-                          title: titleController.text,
-                          street: streetController.text,
-                          city: cityController.text,
-                          state: stateController.text,
-                          pincode: pincodeController.text,
-                        );
-
-                        addressProvider.addAddress(newAddress);
-                        Navigator.pop(context);
-                      }
-                    },
+                    onPressed: onSave,
                     child: const Text(
                       'Save Address',
                       style: TextStyle(fontSize: 17),
@@ -214,5 +270,26 @@ class AddressForm extends StatelessWidget {
       validator: (value) =>
           value == null || value.isEmpty ? 'Enter $label' : null,
     );
+  }
+
+  Future<bool> _confirmDeleteDialog(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Confirm Delete"),
+            content:
+                const Text("Are you sure you want to delete this address?"),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text("Cancel")),
+              TextButton(
+                  onPressed: () => Navigator.pop(context, true),
+                  child: const Text("Delete",
+                      style: TextStyle(color: Colors.red))),
+            ],
+          ),
+        ) ??
+        false;
   }
 }
