@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 final ThemeData nmtDoctorTheme = ThemeData(
-  fontFamily: 'Inter',
+  fontFamily: 'Rubik',
   colorSchemeSeed: const Color(0xFF003580),
   useMaterial3: true,
   scaffoldBackgroundColor: const Color.fromARGB(255, 240, 240, 240),
@@ -11,7 +11,7 @@ final ThemeData nmtDoctorTheme = ThemeData(
       color: Colors.white,
       fontWeight: FontWeight.w600,
       fontSize: 23,
-      fontFamily: 'Poppins',
+      fontFamily: 'Roboto',
     ),
     backgroundColor: Color(0xFF003580),
     iconTheme: IconThemeData(

@@ -13,7 +13,7 @@ class NmtdSnackbar {
     BuildContext context,
     String message, {
     NoticeType type = NoticeType.info,
-    Duration duration = const Duration(seconds: 4),
+    Duration duration = const Duration(seconds: 3),
   }) {
     final overlayState = Overlay.of(context);
     final overlayEntry = OverlayEntry(
@@ -53,7 +53,7 @@ class NmtdSnackbar {
                     message,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontFamily: "Poppins",
+                      fontFamily: "Roboto",
                     ),
                   ),
                 ),

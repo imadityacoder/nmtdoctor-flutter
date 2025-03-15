@@ -20,7 +20,7 @@ class NmtdNavbar extends StatelessWidget {
             context.push('/health-checks');
             break;
           case 2:
-            context.push('/reports');
+            context.push('/cart');
             break;
           case 3:
             context.push('/profile');
@@ -35,7 +35,7 @@ class NmtdNavbar extends StatelessWidget {
     final location = GoRouterState.of(context).uri.toString();
     if (location == '/home') return 0;
     if (location == '/health-checks') return 1;
-    if (location == '/reports') return 2;
+    if (location == '/cart') return 2;
     if (location == '/profile') return 3;
     return 0;
   }

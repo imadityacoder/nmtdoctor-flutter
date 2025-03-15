@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nmt_doctor_app/api/local_data.dart';
+import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
 
 void showHealthPackDetails(
   BuildContext context, {
@@ -35,7 +36,7 @@ void showHealthPackDetails(
               Center(
                 child: Container(
                   height: 4,
-                  width: 40,
+                  width: 50,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
@@ -48,12 +49,12 @@ void showHealthPackDetails(
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 23,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF003580),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
 
               // Price Section
               Row(
@@ -61,17 +62,17 @@ void showHealthPackDetails(
                 children: [
                   Text(
                     "₹$price",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
-                      color: Colors.green,
+                      color: Colors.green.shade500,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     "₹$preprice",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
-                      color: Colors.red,
+                      color: Colors.red.shade500,
                       decoration: TextDecoration.lineThrough,
                     ),
                   ),
@@ -83,18 +84,17 @@ void showHealthPackDetails(
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context); // Example booking logic
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Booking confirmed!"),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
+                  NmtdSnackbar.show(context, "This is now in updating",
+                      type: NoticeType.warning);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF003580),
                   minimumSize: const Size(double.infinity, 45),
                 ),
-                child: const Text("Book now"),
+                child: const Text(
+                  "Add to cart",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
               const SizedBox(height: 12),
 
@@ -106,7 +106,10 @@ void showHealthPackDetails(
                     children: [
                       Icon(Icons.home, color: Color(0xFF003580)),
                       SizedBox(width: 8),
-                      Text("Home Sample Collection Available"),
+                      Text(
+                        "Home Sample Collection Available",
+                        overflow: TextOverflow.clip,
+                      ),
                     ],
                   ),
                   Column(
@@ -126,7 +129,7 @@ void showHealthPackDetails(
                 "Description",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 17,
                 ),
               ),
               Text(desc),
@@ -137,14 +140,13 @@ void showHealthPackDetails(
                 "What is it for?",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 17,
                 ),
               ),
 
               // List of Tests (Fixed)
               SizedBox(
-                height: filteredChecks.length *
-                    55.0, // Dynamic height for better UX
+                // Dynamic height for better UX
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics:
@@ -154,9 +156,9 @@ void showHealthPackDetails(
                     final checkup = filteredChecks[index];
                     return ListTile(
                       title: Text(checkup['title']),
-                      leading: Icon(
-                        Icons.check_circle,
-                        color: Colors.green.shade600,
+                      leading: const Icon(
+                        Icons.verified_outlined,
+                        color: Colors.green,
                       ),
                     );
                   },
@@ -169,10 +171,25 @@ void showHealthPackDetails(
                 "Sample Type",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 17,
                 ),
               ),
-              const Text("Urine and Blood"),
+              const Row(
+                children: [
+                  Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Blood"),
+                      )),
+                  Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Urine"),
+                      )),
+                ],
+              ),
             ],
           ),
         ),

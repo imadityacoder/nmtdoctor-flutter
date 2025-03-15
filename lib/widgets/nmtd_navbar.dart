@@ -14,9 +14,9 @@ List<BottomNavigationBarItem> navbarItems = [
     label: 'Checkups',
   ),
   const BottomNavigationBarItem(
-    icon: Icon(Icons.receipt_long_outlined),
-    activeIcon: Icon(Icons.receipt_long),
-    label: 'My Reports',
+    icon: Icon(Icons.shopping_cart_outlined),
+    activeIcon: Icon(Icons.shopping_cart),
+    label: 'My Cart',
   ),
   const BottomNavigationBarItem(
     icon: Icon(

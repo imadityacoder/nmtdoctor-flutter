@@ -1,35 +1,53 @@
 List<Map<String, dynamic>> popularCheckups = [
   {
+    "cardId": "1",
     "title": "Basic Health Checkup",
+    "description":
+        "A starter pack designed to provide a comprehensive overview of your overall health. This package includes essential tests such as CBC, Blood Sugar Tests, and Lipid Profile.",
     "price": "999",
     "preprice": "1499",
-    "icon": "assets/icons/sample.svg",
+    "svgAsset": "assets/icons/sample.svg",
+    "tests": ["1", "7", "8", "22", "23", "24", "25"]
   },
   {
-    "title": "Liver Function Test Package",
-    "price": "1199",
-    "preprice": "1699",
-    "icon": "assets/icons/liver.svg",
-  },
-  {
-    "title": "Kidney Function Test Package",
-    "price": "1099",
-    "preprice": "1599",
-    "icon": "assets/icons/kidney.svg",
-  },
-  {
-    "title": "Thyroid Profile Package",
-    "price": "899",
-    "preprice": "1299",
-    "icon": "assets/icons/pills.svg",
-  },
-  {
+    "cardId": "6",
     "title": "Heart Health Package",
     "description":
-        "Designed for cardiovascular health, including Lipid Profile, CRP, and ECG.",
+        "This package includes Lipid Profile, CRP, and ECG to assess cardiovascular health.",
     "price": "1499",
     "preprice": "1999",
-    "icon": "assets/icons/heart.svg",
+    "svgAsset": "assets/icons/heart.svg",
+    "tests": ["22", "23", "24", "25", "29", "47"]
+  },
+  {
+    "cardId": "3",
+    "title": "Liver Function Test Package",
+    "description":
+        "The Liver Function Test Package evaluates liver enzymes and includes ALT, AST, and Bilirubin tests.",
+    "price": "1199",
+    "preprice": "1699",
+    "svgAsset": "assets/icons/liver.svg",
+    "tests": ["11", "12", "13", "14"]
+  },
+  {
+    "cardId": "4",
+    "title": "Kidney Function Test Package",
+    "description":
+        "This package evaluates kidney function through key markers such as Serum Creatinine, BUN, and Uric Acid.",
+    "price": "1099",
+    "preprice": "1599",
+    "svgAsset": "assets/icons/kidney.svg",
+    "tests": ["19", "20", "21"]
+  },
+  {
+    "cardId": "5",
+    "title": "Thyroid Profile Package",
+    "description":
+        "This package includes TSH, Free T3, and Free T4 to evaluate thyroid function.",
+    "price": "899",
+    "preprice": "1299",
+    "svgAsset": "assets/icons/pills.svg",
+    "tests": ["26", "27", "28"]
   },
 ];
 

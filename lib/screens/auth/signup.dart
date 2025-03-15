@@ -64,7 +64,7 @@ class _SignUpContentState extends State<SignUpContent> {
                 Text(
                   "SignUp.",
                   style: TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Roboto',
                     fontSize: 60,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
