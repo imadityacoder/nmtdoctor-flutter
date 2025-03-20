@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nmt_doctor_app/api/local_data.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
+import 'package:nmt_doctor_app/providers/order_provider.dart';
+import 'package:nmt_doctor_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 void showHealthPackDetails(
   BuildContext context, {
@@ -9,7 +12,7 @@ void showHealthPackDetails(
   required String preprice,
   required String price,
   required String desc,
-  required List tests,
+  required List tests, // Ensure it's a List<String>
   required String svgAsset,
 }) {
   showModalBottomSheet(
@@ -20,9 +23,11 @@ void showHealthPackDetails(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (context) {
-      final selectedIds = tests;
+      final selectedIds = tests; // Ensure tests contain correct IDs or titles
+
       final filteredChecks = healthChecks
-          .where((checkup) => selectedIds.contains(checkup['id']))
+          .where((checkup) =>
+              selectedIds.contains(checkup['cardId'])) // Match by title
           .toList();
 
       return Padding(
@@ -80,19 +85,45 @@ void showHealthPackDetails(
               ),
               const SizedBox(height: 12),
 
-              // Book Now Button
+              // Book Now Button (Now Adds to Cart)
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); // Example booking logic
-                  NmtdSnackbar.show(context, "This is now in updating",
-                      type: NoticeType.warning);
+                  final userProvider =
+                      Provider.of<UserProvider>(context, listen: false);
+                  Provider.of<OrderProvider>(context, listen: false)
+                      .setUserDetails(user: userProvider.userData!);
+
+                  // Add package to cart
+                  Provider.of<OrderProvider>(context, listen: false)
+                      .setTestPackage(
+                    title: title,
+                    totalPrice: price,
+                    items: tests.map((testId) {
+                      final checkup = healthChecks.firstWhere(
+                        (checkup) =>
+                            checkup['cardId'] ==
+                            testId, // Match test ID with checkup's cardId
+                        orElse: () => {
+                          'title': 'Unknown Test'
+                        }, // Default in case of missing match
+                      );
+                      return {
+                        "title": checkup[
+                            'title'], // Get test title from filtered checkup
+                        "price": "Included",
+                      };
+                    }).toList(),
+                  );
+
+                  context.pop();
+                  context.push('/booking');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF003580),
                   minimumSize: const Size(double.infinity, 45),
                 ),
                 child: const Text(
-                  "Add to cart",
+                  "Book now",
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -129,10 +160,13 @@ void showHealthPackDetails(
                 "Description",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 18,
                 ),
               ),
-              Text(desc),
+              Text(
+                desc,
+                style: const TextStyle(fontSize: 16),
+              ),
               const SizedBox(height: 12),
 
               // What is it for?
@@ -140,26 +174,32 @@ void showHealthPackDetails(
                 "What is it for?",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 18,
                 ),
               ),
 
-              // List of Tests (Fixed)
+              // List of Tests
               SizedBox(
-                // Dynamic height for better UX
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics:
-                      const NeverScrollableScrollPhysics(), // Prevents inner scrolling
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: filteredChecks.length,
                   itemBuilder: (context, index) {
                     final checkup = filteredChecks[index];
-                    return ListTile(
-                      title: Text(checkup['title']),
-                      leading: const Icon(
-                        Icons.verified_outlined,
-                        color: Colors.green,
-                      ),
+                    return Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.verified_outlined,
+                            color: Colors.green,
+                          ),
+                        ),
+                        Text(
+                          checkup['title'],
+                          style: const TextStyle(fontSize: 17),
+                        ),
+                      ],
                     );
                   },
                 ),
@@ -177,17 +217,15 @@ void showHealthPackDetails(
               const Row(
                 children: [
                   Card(
-                      elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Blood"),
-                      )),
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Blood"),
+                  )),
                   Card(
-                      elevation: 3,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text("Urine"),
-                      )),
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Urine"),
+                  )),
                 ],
               ),
             ],

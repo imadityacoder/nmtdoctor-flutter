@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nmt_doctor_app/api/local_data.dart';
-import 'package:nmt_doctor_app/providers/hc_cart_provider.dart';
-import 'package:nmt_doctor_app/routes/navbar.dart';
+import 'package:nmt_doctor_app/providers/order_provider.dart';
 import 'package:nmt_doctor_app/widgets/builders.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
-import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
+
 import 'package:provider/provider.dart';
 
 class HealthPacksContent extends StatelessWidget {
@@ -13,8 +12,6 @@ class HealthPacksContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hcCartProvider = Provider.of<HcCartProvider>(context, listen: false);
-
     return Scaffold(
       appBar: nmtdAppbar(
         title: const Text(
@@ -35,15 +32,30 @@ class HealthPacksContent extends StatelessWidget {
             svgAsset: testPack['svgAsset'] ?? 'assets/default.svg',
             preprice: testPack['preprice'] ?? '0',
             price: testPack['price'] ?? '0',
-            onTap: () {
-              hcCartProvider.addToCartById(testPack['cardId']);
-              NmtdSnackbar.show(context, "Health pack added to cart!",
-                  type: NoticeType.success);
-              context.push('/cart');
-            },
+            onTap: () => packagePlaceOrder(context, testPack),
           );
         },
       ),
     );
   }
+}
+
+void packagePlaceOrder(BuildContext context, Map<String, dynamic> package) {
+  final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+
+  orderProvider.setTestPackage(
+    title: package['title'] ?? "Custom Package",
+    totalPrice: package['price'] ?? '0',
+    items: (package['tests'] as List<dynamic>?)
+            ?.map((test) => {
+                  "title": test,
+                  "price":
+                      "Included", // Since it's a package, individual tests don't have prices
+                })
+            .toList() ??
+        [],
+  );
+
+  context.pop();
+  context.push('/booking'); // Navigate to orders page
 }

@@ -3,7 +3,7 @@ List<Map<String, dynamic>> popularCheckups = [
     "cardId": "1",
     "title": "Basic Health Checkup",
     "description":
-        "A starter pack designed to provide a comprehensive overview of your overall health. This package includes essential tests such as CBC, Blood Sugar Tests, and Lipid Profile.",
+        "A starter pack designed to provide a comprehensive overview of your overall health. This package includes essential tests such as CBC, Blood Sugar Tests, and LipcardId Profile.",
     "price": "999",
     "preprice": "1499",
     "svgAsset": "assets/icons/sample.svg",
@@ -52,168 +52,198 @@ List<Map<String, dynamic>> popularCheckups = [
 ];
 
 List<Map<String, dynamic>> healthChecks = [
-  {"id": "1", "title": "Hemoglobin (Hb)", "price": "250", "preprice": "300"},
   {
-    "id": "2",
+    "cardId": "1",
+    "title": "Hemoglobin (Hb)",
+    "price": "250",
+    "preprice": "300"
+  },
+  {
+    "cardId": "2",
     "title": "Red Blood Cell Count (RBC)",
     "price": "300",
     "preprice": "350"
   },
   {
-    "id": "3",
+    "cardId": "3",
     "title": "White Blood Cell Count (WBC)",
     "price": "270",
     "preprice": "320"
   },
-  {"id": "4", "title": "Platelet Count", "price": "220", "preprice": "280"},
-  {"id": "5", "title": "Hematocrit (Hct)", "price": "280", "preprice": "330"},
+  {"cardId": "4", "title": "Platelet Count", "price": "220", "preprice": "280"},
   {
-    "id": "6",
+    "cardId": "5",
+    "title": "Hematocrit (Hct)",
+    "price": "280",
+    "preprice": "330"
+  },
+  {
+    "cardId": "6",
     "title": "Mean Corpuscular Volume (MCV)",
     "price": "260",
     "preprice": "310"
   },
   {
-    "id": "7",
+    "cardId": "7",
     "title": "Fasting Blood Sugar (FBS)",
     "price": '180',
     "preprice": '230'
   },
   {
-    "id": "8",
+    "cardId": "8",
     "title": "Postprandial Blood Sugar (PPBS)",
     "price": '200',
     "preprice": "250"
   },
   {
-    "id": "9",
+    "cardId": "9",
     "title": "Random Blood Sugar (RBS)",
     "price": '150',
     "preprice": '200'
   },
   {
-    "id": "10",
+    "cardId": "10",
     "title": "HbA1c (Glycated Hemoglobin)",
     "price": '350',
     "preprice": '400'
   },
   {
-    "id": "11",
+    "cardId": "11",
     "title": "Alanine Transaminase (ALT)",
     "price": '300',
     "preprice": '350'
   },
   {
-    "id": "12",
+    "cardId": "12",
     "title": "Aspartate Transaminase (AST)",
     "price": '320',
     "preprice": '370'
   },
   {
-    "id": "13",
+    "cardId": "13",
     "title": "Alkaline Phosphatase (ALP)",
     "price": '350',
     "preprice": '400'
   },
   {
-    "id": "14",
+    "cardId": "14",
     "title": "Bilirubin (Total, Direct, Indirect)",
     "price": '280',
     "preprice": '330'
   },
-  {"id": "15", "title": "Albumin", "price": '300', "preprice": '350'},
-  {"id": "16", "title": "Globulin", "price": "250", "preprice": '300'},
+  {"cardId": "15", "title": "Albumin", "price": '300', "preprice": '350'},
+  {"cardId": "16", "title": "Globulin", "price": "250", "preprice": '300'},
   {
-    "id": "17",
+    "cardId": "17",
     "title": "Prothrombin Time (PT)",
     "price": '320',
     "preprice": '370'
   },
   {
-    "id": "18",
+    "cardId": "18",
     "title": "Blood Urea Nitrogen (BUN)",
     "price": '220',
     "preprice": '270'
   },
-  {"id": "19", "title": "Serum Creatinine", "price": "250", "preprice": '300'},
-  {"id": "20", "title": "Uric Acid", "price": '270', "preprice": '320'},
   {
-    "id": "21",
+    "cardId": "19",
+    "title": "Serum Creatinine",
+    "price": "250",
+    "preprice": '300'
+  },
+  {"cardId": "20", "title": "Uric Acid", "price": '270', "preprice": '320'},
+  {
+    "cardId": "21",
     "title": "Estimated Glomerular Filtration Rate (eGFR)",
     "price": '400',
     "preprice": '450'
   },
-  {"id": "22", "title": "Total Cholesterol", "price": '350', "preprice": '400'},
   {
-    "id": "23",
+    "cardId": "22",
+    "title": "Total Cholesterol",
+    "price": '350',
+    "preprice": '400'
+  },
+  {
+    "cardId": "23",
     "title": "High-Density Lipoprotein (HDL)",
     "price": '300',
     "preprice": '350'
   },
   {
-    "id": "24",
+    "cardId": "24",
     "title": "Low-Density Lipoprotein (LDL)",
     "price": '320',
     "preprice": '370'
   },
   {
-    "id": "25",
+    "cardId": "25",
     "title": "Triglycerides (TG)",
     "price": '280',
     "preprice": '330'
   },
   {
-    "id": "26",
-    "title": "Thyroid-Stimulating Hormone (TSH)",
+    "cardId": "26",
+    "title": "Thyrocid-Stimulating Hormone (TSH)",
     "price": '350',
     "preprice": '400'
   },
   {
-    "id": "27",
+    "cardId": "27",
     "title": "Free T3 (Triiodothyronine)",
     "price": '300',
     "preprice": '350'
   },
   {
-    "id": "28",
+    "cardId": "28",
     "title": "Free T4 (Thyroxine)",
     "price": '280',
     "preprice": '330'
   },
   {
-    "id": "29",
+    "cardId": "29",
     "title": "C-Reactive Protein (CRP)",
     "price": "300",
     "preprice": "350"
   },
-  {"id": "30", "title": "Insulin", "price": "400", "preprice": "450"},
-  {"id": "31", "title": "Testosterone", "price": "320", "preprice": "370"},
-  {"id": "32", "title": "Estradiol", "price": "300", "preprice": "350"},
-  {"id": "33", "title": "Progesterone", "price": "300", "preprice": "350"},
-  {"id": "34", "title": "Vitamin D", "price": "400", "preprice": "450"},
-  {"id": "35", "title": "Vitamin B12", "price": "300", "preprice": "350"},
-  {"id": "36", "title": "Iron", "price": "250", "preprice": "300"},
-  {"id": "37", "title": "Calcium", "price": "240", "preprice": "290"},
-  {"id": "38", "title": "Sodium", "price": "200", "preprice": "250"},
-  {"id": "39", "title": "Potassium", "price": "230", "preprice": "280"},
-  {"id": "40", "title": "Chloride", "price": "210", "preprice": "260"},
-  {"id": "41", "title": "Magnesium", "price": "300", "preprice": "350"},
-  {"id": "42", "title": "Zinc", "price": "300", "preprice": "350"},
-  {"id": "43", "title": "Electrolyte Panel", "price": "350", "preprice": "400"},
+  {"cardId": "30", "title": "Insulin", "price": "400", "preprice": "450"},
+  {"cardId": "31", "title": "Testosterone", "price": "320", "preprice": "370"},
+  {"cardId": "32", "title": "Estradiol", "price": "300", "preprice": "350"},
+  {"cardId": "33", "title": "Progesterone", "price": "300", "preprice": "350"},
+  {"cardId": "34", "title": "Vitamin D", "price": "400", "preprice": "450"},
+  {"cardId": "35", "title": "Vitamin B12", "price": "300", "preprice": "350"},
+  {"cardId": "36", "title": "Iron", "price": "250", "preprice": "300"},
+  {"cardId": "37", "title": "Calcium", "price": "240", "preprice": "290"},
+  {"cardId": "38", "title": "Sodium", "price": "200", "preprice": "250"},
+  {"cardId": "39", "title": "Potassium", "price": "230", "preprice": "280"},
+  {"cardId": "40", "title": "Chloride", "price": "210", "preprice": "260"},
+  {"cardId": "41", "title": "Magnesium", "price": "300", "preprice": "350"},
+  {"cardId": "42", "title": "Zinc", "price": "300", "preprice": "350"},
   {
-    "id": "44",
+    "cardId": "43",
+    "title": "Electrolyte Panel",
+    "price": "350",
+    "preprice": "400"
+  },
+  {
+    "cardId": "44",
     "title": "Liver Enzyme Panel",
     "price": "400",
     "preprice": "450"
   },
   {
-    "id": "45",
+    "cardId": "45",
     "title": "Kidney Function Panel",
     "price": "350",
     "preprice": "400"
   },
-  {"id": "46", "title": "Cardiac Profile", "price": "500", "preprice": "600"},
-  {"id": "47", "title": "ECG", "price": "700", "preprice": "900"},
+  {
+    "cardId": "46",
+    "title": "Cardiac Profile",
+    "price": "500",
+    "preprice": "600"
+  },
+  {"cardId": "47", "title": "ECG", "price": "700", "preprice": "900"},
 ];
 List<Map<String, dynamic>> healthPacks = [
   {
@@ -250,7 +280,7 @@ List<Map<String, dynamic>> healthPacks = [
     "cardId": "4",
     "title": "Kidney Function Test Package",
     "description":
-        "This package evaluates kidney function through key markers such as Serum Creatinine, BUN, and Uric Acid.",
+        "This package evaluates Kidney function through key markers such as Serum Creatinine, BUN, and Uric Acid.",
     "price": "1099",
     "preprice": "1599",
     "svgAsset": "assets/icons/kidney.svg",

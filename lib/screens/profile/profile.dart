@@ -48,7 +48,7 @@ class _ProfileContentState extends State<ProfileContent> {
                     children: [
                       Card(
                         elevation: 4,
-                        margin: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.all(8),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 40.0, horizontal: 8.0),
@@ -114,23 +114,68 @@ class _ProfileContentState extends State<ProfileContent> {
                       ),
                       const SizedBox(height: 20),
                       _buildSectionTitle("My Details"),
-                      _buildProfileOption(
-                        "Family Members",
-                        Icons.group,
-                        () => context.push('/family-member'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Card(
+                          elevation: 3,
+                          child: Column(
+                            children: [
+                              _buildProfileOption(
+                                "Family Members",
+                                Icons.group,
+                                () => context.push('/family-member'),
+                              ),
+                              const Divider(),
+                              _buildProfileOption(
+                                "Address Book",
+                                Icons.location_on,
+                                () => context.push('/address'),
+                              ),
+                              const Divider(),
+                              _buildProfileOption(
+                                "My Reports",
+                                Icons.file_copy,
+                                () => context.push('/reports'),
+                              ),
+                              const Divider(),
+                              _buildProfileOption(
+                                "Bookings",
+                                Icons.shopping_bag,
+                                () => context.push('/my-booking'),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      _buildProfileOption(
-                        "Address Book",
-                        Icons.location_on,
-                        () => context.push('/address'),
+                      const SizedBox(height: 30),
+                      _buildSectionTitle("Legals"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Card(
+                          elevation: 3,
+                          child: Column(
+                            children: [
+                              _buildProfileOption(
+                                "About Us",
+                                Icons.info,
+                                () {},
+                              ),
+                              const Divider(),
+                              _buildProfileOption(
+                                "Contact Us",
+                                Icons.message,
+                                () {},
+                              ),
+                              const Divider(),
+                              _buildProfileOption(
+                                "Terms and Conditions",
+                                Icons.file_copy,
+                                () {},
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      _buildProfileOption(
-                        "Prescription",
-                        Icons.file_copy,
-                        () {},
-                      ),
-                      _buildProfileOption(
-                          "Bookings & Reports", Icons.shopping_bag, () {}),
                     ],
                   ),
                 ),
@@ -140,25 +185,20 @@ class _ProfileContentState extends State<ProfileContent> {
 
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       child: Text(title,
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
     );
   }
 
   Widget _buildProfileOption(String title, IconData icon, VoidCallback onTap) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-        leading: Icon(icon, color: Colors.black87),
-        title: Text(title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-        trailing:
-            const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
-        onTap: onTap,
-      ),
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+      leading: Icon(icon, color: Colors.black87),
+      title: Text(title, style: const TextStyle(fontSize: 18)),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+      onTap: onTap,
     );
   }
 

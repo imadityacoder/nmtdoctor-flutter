@@ -25,11 +25,19 @@ dependencies:
   firebase_storage: ^12.4.4
   google_sign_in: ^6.2.2
   geocoding: ^3.0.0
+  shared_preferences: ^2.5.2
+  permission_handler: ^11.4.0
+  shimmer: ^3.0.0
+  pay: ^3.2.0
+  phonepe_payment_sdk: ^3.0.0
+  firebase_messaging: ^15.2.4
+  flutter_local_notifications: ^19.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.14.3
   flutter_lints: ^4.0.0
 
 flutter:
@@ -51,3 +59,11 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins/Poppins-Bold.ttf
           weight: 700
+
+flutter_icons:
+  android: true
+  ios: false
+  image_path: "assets/images/logo.png" # Path to your icon
+  adaptive_icon_foreground: "assets/images/logo.png" # For Android adaptive icons
+  adaptive_icon_background: "assets/images/logo_background.png" # For Android adaptive icons
+

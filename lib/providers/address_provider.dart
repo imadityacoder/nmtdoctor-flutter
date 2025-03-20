@@ -11,8 +11,6 @@ class Address {
   String city;
   String state;
   String pincode;
-  double latitude;
-  double longitude;
 
   Address({
     required this.id,
@@ -21,8 +19,6 @@ class Address {
     required this.city,
     required this.state,
     required this.pincode,
-    this.latitude = 0.0, // Will be auto-updated
-    this.longitude = 0.0,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,8 +28,6 @@ class Address {
       'city': city,
       'state': state,
       'pincode': pincode,
-      'latitude': latitude,
-      'longitude': longitude,
     };
   }
 
@@ -45,8 +39,6 @@ class Address {
       city: map['city'],
       state: map['state'],
       pincode: map['pincode'],
-      latitude: map['latitude'] ?? 0.0,
-      longitude: map['longitude'] ?? 0.0,
     );
   }
 }
@@ -88,7 +80,6 @@ class AddressProvider extends ChangeNotifier {
     if (_uid.isEmpty) return;
 
     try {
-      Position position = await _getCurrentLocation();
       Address newAddress = Address(
         id: address.id,
         title: address.title,
@@ -96,8 +87,6 @@ class AddressProvider extends ChangeNotifier {
         city: address.city,
         state: address.state,
         pincode: address.pincode,
-        latitude: position.latitude,
-        longitude: position.longitude,
       );
 
       await _firestore.collection('addresses').doc(_uid).set(

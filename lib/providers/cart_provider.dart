@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:nmt_doctor_app/api/local_data.dart'; // Ensure this contains healthPacks data
 
-// **Standard Cart Item Model**
-class HcCartItem {
+class CartItem {
   final String cardId;
   final String title;
   final String price;
   final String preprice;
   int quantity;
 
-  HcCartItem({
+  CartItem({
     required this.cardId,
     required this.title,
     required this.price,
@@ -19,6 +17,7 @@ class HcCartItem {
     this.quantity = 1,
   });
 
+  // Convert CartItem to Map (for saving)
   Map<String, dynamic> toMap() {
     return {
       'cardId': cardId,
@@ -29,182 +28,97 @@ class HcCartItem {
     };
   }
 
-  factory HcCartItem.fromMap(Map<String, dynamic> map) {
-    return HcCartItem(
-      cardId: map['cardId'],
-      title: map['title'],
-      price: map['price'],
-      preprice: map['preprice'],
-      quantity: map['quantity'],
-    );
-  }
-}
-
-// **Custom Test Package Model**
-class CartItem extends HcCartItem {
-  final List<String> tests;
-
-  CartItem({
-    required String cardId,
-    required String title,
-    required String price,
-    required String preprice,
-    required this.tests,
-    int quantity = 1,
-  }) : super(
-          cardId: cardId,
-          title: title,
-          price: price,
-          preprice: preprice,
-          quantity: quantity,
-        );
-
-  @override
-  Map<String, dynamic> toMap() {
-    return super.toMap()..addAll({'tests': tests});
-  }
-
+  // Create CartItem from Map (for loading)
   factory CartItem.fromMap(Map<String, dynamic> map) {
     return CartItem(
       cardId: map['cardId'],
       title: map['title'],
       price: map['price'],
       preprice: map['preprice'],
-      tests: List<String>.from(map['tests']),
       quantity: map['quantity'],
     );
   }
 }
 
-class HcCartProvider extends ChangeNotifier {
-  final Map<String, HcCartItem> _items = {};
-  List<CartItem> _customHealthPacks = [];
+class CartProvider extends ChangeNotifier {
+  final List<CartItem> _items = [];
 
-  Map<String, HcCartItem> get items => _items;
-  List<CartItem> get customHealthPacks => _customHealthPacks;
+  List<CartItem> get items => _items;
 
-  double get totalPrice => _items.values.fold(
-        0.0,
-        (sum, item) =>
-            sum + (double.tryParse(item.price) ?? 0.0) * item.quantity,
-      );
+  double get total => _items.fold(
+      0.0,
+      (sum, item) =>
+          sum + (double.tryParse(item.price) ?? 0.0) * (item.quantity));
 
-  double get pretotal => _items.values.fold(
-        0.0,
-        (sum, item) =>
-            sum + (double.tryParse(item.preprice) ?? 0.0) * item.quantity,
-      );
+  double get pretotal => _items.fold(
+      0.0,
+      (sum, item) =>
+          sum + (double.tryParse(item.preprice) ?? 0.0) * (item.quantity));
 
-  HcCartProvider() {
+  double getProgressiveTotal(int index) {
+    double runningTotal = 0.0;
+    for (int i = 0; i <= index; i++) {
+      runningTotal +=
+          (double.tryParse(_items[i].price) ?? 0.0) * (_items[i].quantity);
+    }
+    return runningTotal;
+  }
+
+  CartProvider() {
     _loadCart();
-    _loadCustomHealthPacks();
   }
 
-  void addItem(HcCartItem item) {
-    if (_items.containsKey(item.cardId)) {
-      _items[item.cardId]!.quantity++;
+  void addItem(CartItem item) {
+    final existingItemIndex = _items.indexWhere((e) => e.title == item.title);
+
+    if (existingItemIndex != -1) {
+      _items[existingItemIndex].quantity++;
     } else {
-      _items[item.cardId] = item;
+      _items.add(item);
     }
-    _saveCart();
+
+    _saveCart(); // Save to SharedPreferences
     notifyListeners();
   }
 
-  void addToCartById(String cardId) {
-    final itemData = healthPacks.firstWhere(
-      (pack) => pack['cardId'] == cardId,
-      orElse: () => {},
-    );
-    if (itemData.isNotEmpty) {
-      final newItem = CartItem.fromMap(itemData);
-      addItem(newItem);
+  void removeItemByTitle(String title) {
+    final existingItemIndex = _items.indexWhere((item) => item.title == title);
+
+    if (existingItemIndex != -1) {
+      if (_items[existingItemIndex].quantity > 1) {
+        _items[existingItemIndex].quantity--;
+      } else {
+        _items.removeAt(existingItemIndex);
+      }
     }
-  }
 
-  void createCustomPackage() async {
-    if (_items.isEmpty) return;
-
-    String packageId = "custom_${DateTime.now().millisecondsSinceEpoch}";
-    String packageTitle = "My Package (${_items.length} Tests)";
-
-    double totalPrice = _items.values
-        .fold(0.0, (sum, item) => sum + (double.tryParse(item.price) ?? 0.0));
-    double totalPrePrice = _items.values.fold(
-        0.0, (sum, item) => sum + (double.tryParse(item.preprice) ?? 0.0));
-
-    CartItem customPackage = CartItem(
-      cardId: packageId,
-      title: packageTitle,
-      price: totalPrice.toStringAsFixed(2),
-      preprice: totalPrePrice.toStringAsFixed(2),
-      tests: _items.keys.toList(),
-      quantity: 1,
-    );
-
-    _customHealthPacks.add(customPackage);
-    await _saveCustomHealthPacks();
+    _saveCart(); // Save to SharedPreferences
     notifyListeners();
-  }
-
-  void removeItem(String id) {
-    _items.remove(id);
-    _saveCart();
-    notifyListeners();
-  }
-
-  void updateQuantity(String id, int quantity) {
-    if (_items.containsKey(id)) {
-      _items[id]!.quantity = quantity;
-      _saveCart();
-      notifyListeners();
-    }
   }
 
   void clearCart() {
     _items.clear();
-    _saveCart();
+    _saveCart(); // Save to SharedPreferences
     notifyListeners();
   }
 
+  // Save cart data to SharedPreferences
   Future<void> _saveCart() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> cartJson =
-        _items.values.map((item) => jsonEncode(item.toMap())).toList();
+        _items.map((item) => jsonEncode(item.toMap())).toList();
     await prefs.setStringList('cart_items', cartJson);
   }
 
+  // Load cart data from SharedPreferences
   Future<void> _loadCart() async {
     final prefs = await SharedPreferences.getInstance();
     List<String>? cartJson = prefs.getStringList('cart_items');
+
     if (cartJson != null) {
       _items.clear();
-      _items.addEntries(cartJson.map((item) {
-        final decodedItem = jsonDecode(item);
-        return MapEntry(decodedItem['cardId'], HcCartItem.fromMap(decodedItem));
-      }));
+      _items.addAll(cartJson.map((item) => CartItem.fromMap(jsonDecode(item))));
+      notifyListeners();
     }
-    notifyListeners();
-  }
-
-  Future<void> _saveCustomHealthPacks() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> customPackJson =
-        _customHealthPacks.map((pack) => jsonEncode(pack.toMap())).toList();
-    await prefs.setStringList('custom_health_packs', customPackJson);
-  }
-
-  Future<void> _loadCustomHealthPacks() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String>? customPackJson = prefs.getStringList('custom_health_packs');
-    if (customPackJson != null) {
-      _customHealthPacks = customPackJson
-          .map((pack) => CartItem.fromMap(jsonDecode(pack)))
-          .toList();
-    }
-  }
-
-  void removeCustomPack(String id) {
-    _customHealthPacks.removeWhere((pack) => pack.cardId == id);
-    notifyListeners();
   }
 }

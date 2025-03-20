@@ -3,6 +3,7 @@ import 'package:nmt_doctor_app/auth_warpper.dart';
 import 'package:nmt_doctor_app/screens/auth/forgot_password.dart';
 import 'package:nmt_doctor_app/screens/auth/login.dart';
 import 'package:nmt_doctor_app/screens/auth/signup.dart';
+import 'package:nmt_doctor_app/screens/booking/order.dart';
 import 'package:nmt_doctor_app/screens/healthchecks/hc_cart.dart';
 import 'package:nmt_doctor_app/screens/healthchecks/healthchecks.dart';
 import 'package:nmt_doctor_app/screens/healthpacks/healthpacks.dart';
@@ -33,7 +34,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const HealthPacksContent(),
     ),
     GoRoute(
-      path: '/health-checks/hc-cart', // Health Checks page
+      path: '/cart', // Health Checks page
       builder: (context, state) => const HcCartContent(),
     ),
     GoRoute(
@@ -71,6 +72,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/address',
       builder: (context, state) => const AddressForm(),
+    ),
+    GoRoute(
+      path: '/booking',
+      builder: (context, state) => const BookingStepper(),
     ),
   ],
 );

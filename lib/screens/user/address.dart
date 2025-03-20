@@ -220,8 +220,7 @@ class AddressForm extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -233,7 +232,11 @@ class AddressForm extends StatelessWidget {
                     children: [
                       Expanded(child: _buildTextField(controllers[2], 'City')),
                       const SizedBox(width: 10),
-                      Expanded(child: _buildTextField(controllers[3], 'State')),
+                      Expanded(
+                          child: _buildTextField(
+                        controllers[3],
+                        'State',
+                      )),
                     ],
                   ),
                   const SizedBox(height: 10),

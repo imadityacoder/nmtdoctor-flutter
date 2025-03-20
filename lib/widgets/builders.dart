@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nmt_doctor_app/providers/hc_cart_provider.dart';
+import 'package:nmt_doctor_app/providers/cart_provider.dart';
 import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
 import 'package:nmt_doctor_app/screens/healthpacks/detail_pack.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_snackbar.dart';
@@ -174,7 +174,7 @@ Widget buildHealthCheckItem({
   required String preprice,
   required String price,
 }) {
-  return Consumer<HcCartProvider>(builder: (context, cart, child) {
+  return Consumer<CartProvider>(builder: (context, cart, child) {
     bool isInCart = cart.items.any((item) => item.title == title);
     return Card(
       elevation: 3,
@@ -213,7 +213,7 @@ Widget buildHealthCheckItem({
                 "Removed : '$title' to cart",
               ); // Remove if already in cart
             } else {
-              cart.addItem(HcCartItem(
+              cart.addItem(CartItem(
                   cardId: cardId,
                   title: title,
                   price: price,
@@ -330,11 +330,20 @@ Widget buildHealthPackItem({
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: ElevatedButton(
-                                  onPressed: onTap,
+                                  onPressed: () => showHealthPackDetails(
+                                    context,
+                                    cardId: cardId,
+                                    title: title,
+                                    desc: desc,
+                                    tests: tests,
+                                    preprice: preprice,
+                                    price: price,
+                                    svgAsset: svgAsset,
+                                  ),
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(90, 35),
                                   ),
-                                  child: const Text("Add to cart"),
+                                  child: const Text("View Details"),
                                 ),
                               ),
                             ],

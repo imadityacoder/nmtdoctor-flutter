@@ -22,7 +22,7 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
   String? _selectedRelation;
   bool _isLoading = false;
 
-  final List<String> _genders = ['Male', 'Female', 'Other'];
+  final List<String> _genders = ['Male', 'Female', "Other"];
   final List<String> _relations = [
     'Father',
     'Mother',

@@ -12,29 +12,6 @@ class LocationProvider with ChangeNotifier {
 
   /// **Function to request location permissions & enable services**
   Future<void> requestLocation(BuildContext context) async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Prompt user to enable location
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Enable Location"),
-          content: const Text(
-              "Please turn on your location services for better functionality."),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context);
-                await Geolocator.openLocationSettings();
-              },
-              child: const Text("Go to Settings"),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
-
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
