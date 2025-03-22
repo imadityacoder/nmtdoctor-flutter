@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nmt_doctor_app/firebase_options.dart';
@@ -9,6 +10,7 @@ import 'package:nmt_doctor_app/providers/family_provider.dart';
 import 'package:nmt_doctor_app/providers/healthcheck_provider.dart';
 import 'package:nmt_doctor_app/providers/healthpack_provider.dart';
 import 'package:nmt_doctor_app/providers/location_provider.dart';
+import 'package:nmt_doctor_app/providers/messaging_provider.dart';
 import 'package:nmt_doctor_app/providers/order_provider.dart';
 import 'package:nmt_doctor_app/providers/payment_provider.dart';
 import 'package:nmt_doctor_app/providers/user_provider.dart';
@@ -22,6 +24,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessaging.instance.requestPermission();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  String? token = await FirebaseMessaging.instance.getToken();
+  debugPrint("FCM Token: $token");
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -41,6 +48,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => PaymentProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: const MyApp(),
     ),

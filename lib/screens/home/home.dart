@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nmt_doctor_app/api/local_data.dart';
 import 'package:nmt_doctor_app/providers/location_provider.dart';
+import 'package:nmt_doctor_app/providers/messaging_provider.dart';
 import 'package:nmt_doctor_app/providers/user_provider.dart';
 import 'package:nmt_doctor_app/widgets/nmtd_appbar.dart';
 import 'package:nmt_doctor_app/widgets/builders.dart';
@@ -31,6 +32,7 @@ class _HomeContentState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final messageProvider = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
       appBar: nmtdAppbar(

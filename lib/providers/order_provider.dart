@@ -169,4 +169,18 @@ class OrderProvider extends ChangeNotifier {
       debugPrint("❌ Error saving order to Firebase: $e");
     }
   }
+
+  /// Returns the selected package details as a Map
+  Map<String, dynamic>? getPackageDetails() {
+    if (_title == null || _totalPrice == null || _items.isEmpty) {
+      debugPrint("⚠️ No package details available!");
+      return null;
+    }
+
+    return {
+      "title": _title!,
+      "totalPrice": _totalPrice!,
+      "items": List.from(_items),
+    };
+  }
 }
